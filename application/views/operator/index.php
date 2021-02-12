@@ -8,16 +8,18 @@ $nomer = 1;
         <form action="<?= base_url('operator/index'); ?>" method="POST">
             <div class="input-group mb-3">
                 <?php if ($jumlahdaftar == 0) : ?>
-                    <input type="text" class="form-control" placeholder="Cari nama siswa.." name="keyword" autocomplete="off" autofocus disabled>
-                    <div class="input-group-append">
-                        <input class="btn btn-primary" type="submit" name="submit" value="Cari" disabled>
+                <input type="text" class="form-control" placeholder="Cari nama siswa.." name="keyword"
+                    autocomplete="off" autofocus disabled>
+                <div class="input-group-append">
+                    <input class="btn btn-primary" type="submit" name="submit" value="Cari" disabled>
                     <?php else : ?>
-                        <input type="text" class="form-control" placeholder="Cari nama siswa.." name="keyword" autocomplete="off" autofocus>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" type="submit" name="submit" value="Cari">
+                    <input type="text" class="form-control" placeholder="Cari nama siswa.." name="keyword"
+                        autocomplete="off" autofocus>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Cari">
                         <?php endif; ?>
-                        </div>
                     </div>
+                </div>
         </form>
     </div>
 </div>
@@ -35,7 +37,8 @@ $nomer = 1;
                             else :
                                 $classtombol = 'btn-shadow dropdown-toggle btn btn-info';
                             endif; ?>
-                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="<?= $classtombol; ?>">
+                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                class="<?= $classtombol; ?>">
                                 <span class="btn-icon-wrapper pr-2 opacity-7">
                                     <i class="fa fa-download fa-w-20"></i>
                                 </span>
@@ -79,48 +82,52 @@ $nomer = 1;
                     </thead>
                     <tbody>
                         <?php if ($jumlahdaftar == 0) : ?>
-                            <tr>
-                                <td colspan="4">
-                                    <div class="alert alert-success" role="alert">
-                                        Daftar Calon Santri Kosong
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-success" role="alert">
+                                    Daftar Calon Santri Kosong
+                                </div>
+                            </td>
+                        </tr>
                         <?php elseif (empty($santri)) : ?>
-                            <tr>
-                                <td colspan="4">
-                                    <div class="alert alert-danger" role="alert">
-                                        Data Tidak Ditemukan !
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php else :
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-danger" role="alert">
+                                    Data Tidak Ditemukan !
+                                </div>
+                            </td>
+                        </tr>
+                        <?php else :
                             foreach ($santri as $siswa) :
                                 $siswadetail = $this->Santri_model->getDataSantri('setid', $siswa['id_santri']);
                             ?>
-                                <tr>
-                                    <th scope="row"><?= ++$start; ?></th>
-                                    <td><?= $siswadetail['nama']; ?></td>
-                                    <td><?= date("d-F-Y", $siswadetail['date_created']); ?></td>
-                                    <td>
-                                        <a class="badge badge-pill badge-warning" href="<?= base_url('operator/index/detail/'); ?><?= $siswadetail['id_santri']; ?>"><i class=" fa fa-info-circle fa-w-20"></i></a>
-                                    </td>
-                                    <td>
-                                        <?php if ($siswadetail['is_active'] == 0) : ?>
-                                            <div class="badge badge-pill badge-danger" data-toggle="tooltip" data-placement="top" title="Akun belum diaktivasi !"><i class="fa fa-w-20"></i></div>
-                                        <?php elseif ($siswadetail['is_active'] == 1) : ?>
-                                            <div class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top" title="Akun sudah diaktivasi"><i class="fa fa-check fa-w-20"></i></div>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <?php //$nomer++;
+                        <tr>
+                            <th scope="row"><?= ++$start; ?></th>
+                            <td><?= $siswadetail['nama']; ?></td>
+                            <td><?= date("d-F-Y", $siswadetail['date_created']); ?></td>
+                            <td>
+                                <a class="badge badge-pill badge-warning"
+                                    href="<?= base_url('operator/index/detail/'); ?><?= $siswadetail['id_santri']; ?>"><i
+                                        class=" fa fa-info-circle fa-w-20"></i></a>
+                            </td>
+                            <td>
+                                <?php if ($siswadetail['is_active'] == 0) : ?>
+                                <div class="badge badge-pill badge-danger" data-toggle="tooltip" data-placement="top"
+                                    title="Akun belum diaktivasi !"><i class="fa fa-w-20"></i></div>
+                                <?php elseif ($siswadetail['is_active'] == 1) : ?>
+                                <div class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top"
+                                    title="Akun sudah diaktivasi"><i class="fa fa-check fa-w-20"></i></div>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php //$nomer++;
                                 ?>
-                            <?php endforeach; ?>
+                        <?php endforeach; ?>
                         <?php endif; ?>
                     </tbody>
                 </table>
                 <?php if ($jumlahdaftar !== 0) : ?>
-                    <?= $this->pagination->create_links(); ?>
+                <?= $this->pagination->create_links(); ?>
                 <?php endif; ?>
             </div>
         </div>

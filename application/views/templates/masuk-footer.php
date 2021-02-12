@@ -1,6 +1,6 @@
 <div class="text-center">
-    <p><small>SIPP v<?= $keterangan[0]; ?> &copy;<?= $keterangan[1]; ?> <?= $keterangan[2]; ?> ~ Created By <a
-                href="https://MrFrost-Nv27.github.io/sipp">Nova</a></small></p>
+    <p><small>SIPP v<?= $keterangan[0]; ?> &copy;<?= $keterangan[1]; ?> <?= $keterangan[2]; ?> (<a
+                href="https://MrFrost-Nv27.github.io/sipp">Official Page</a>)</small></p>
 </div>
 </div>
 </div>

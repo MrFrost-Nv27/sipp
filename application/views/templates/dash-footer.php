@@ -7,7 +7,7 @@
         <div class="app-footer__inner">
             <div class="app-footer-left">
                 <span>SIPP | Copyright &copy; <?= $keterangan[1]; ?>
-                    <?= $keterangan[2]; ?> ~Created By <a href="https://MrFrost-Nv27.github.io/sipp">Nova</a></span>
+                    <?= $keterangan[2]; ?> (<a href="https://MrFrost-Nv27.github.io/sipp">Official Page</a>)</span>
             </div>
             <div class="app-footer-right">
                 v<?= $keterangan[0]; ?>

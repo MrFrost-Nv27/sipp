@@ -1,0 +1,39 @@
+v1.01
+Menambahkan Tombol Message TawkTo
+
+v1.02
+Menambahkan indikator akun santri aktif/belum pada dashboard ppdb Opearator
+
+v1.03
+Bug fix search santri
+
+v1.04
+Fix bug Admin Menu
+
+v1.05
+Menambahkan menu user dan profil admin super
+
+v1.06
+Memperbaiki link tombol edit
+
+v1.07
+Memperbaiki Official Page
+
+v1.08
+Mengganti create by menjadi official page
+
+v1.09
+Bug Fix panjang colspan pada flash message index operator kurang, masih 4 harusnya 5
+
+v1.10
+Menambahkan changelog
+
+v1.11
+v1.12
+v1.13
+v1.14
+v1.15
+v1.16
+v1.17
+v1.18
+v1.19

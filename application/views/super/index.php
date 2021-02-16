@@ -90,7 +90,7 @@
                     <div class="widget-subheading">Jumlah Calon Pendaftar</div>
                 </div>
                 <div class="widget-content-right">
-                    <div class="widget-numbers text-white"><span>0</span></div>
+                    <div class="widget-numbers text-warning"><span>0</span></div>
                 </div>
             </div>
         </div>

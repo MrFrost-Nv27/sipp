@@ -10,6 +10,7 @@ class Super extends CI_Controller
         $this->load->model('Menu_model');
         $this->load->model('Admin_model');
         $this->load->model('Santri_model');
+        $this->load->model('Sekolah_model');
         is_logged_in();
     }
 
@@ -21,6 +22,7 @@ class Super extends CI_Controller
         $data['header'] = $this->Menu_model->headerQuery();
         $data['page'] = $this->Menu_model->getMenuById(1);
         $data['keterangan'] = $this->Global_model->getKeteranganApp();
+        $data['lembaga'] = $this->Sekolah_model->getListSekolah();
 
         $this->load->view('templates/dash-header', $data);
         $this->load->view('templates/dash-topbar', $data);

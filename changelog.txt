@@ -29,6 +29,7 @@ v1.10
 Menambahkan changelog
 
 v1.11
+Menambahkan Fitur indikator jumlah pendaftar di akun admin
 v1.12
 v1.13
 v1.14

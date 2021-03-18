@@ -46,4 +46,42 @@ class Super extends CI_Controller
         $this->load->view($data['page']['url'], $data);
         $this->load->view('templates/dash-footer', $data);
     }
+
+    public function akunsuper($action = null)
+    {
+
+        $data['user'] = $this->Admin_model->getDataAdmin('login');
+        $data['image'] = $data['user']['foto'];
+        $data['header'] = $this->Menu_model->headerQuery();
+        $data['page'] = $this->Menu_model->getMenuById(17);
+        $data['keterangan'] = $this->Global_model->getKeteranganApp();
+
+        if ($action == 'pass') {
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/dash-header', $data);
+                $this->load->view('templates/dash-topbar', $data);
+                $this->load->view('templates/dash-sidebar', $data);
+                $this->load->view($data['page']['url'], $data);
+                $this->load->view('templates/dash-footer', $data);
+            } else {
+                $this->Admin_model->changepass();
+            }
+        } elseif ($action == 'info') {
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/dash-header', $data);
+                $this->load->view('templates/dash-topbar', $data);
+                $this->load->view('templates/dash-sidebar', $data);
+                $this->load->view($data['page']['url'], $data);
+                $this->load->view('templates/dash-footer', $data);
+            } else {
+                $this->Admin_model->changeinfo();
+            }
+        } else {
+            $this->load->view('templates/dash-header', $data);
+            $this->load->view('templates/dash-topbar', $data);
+            $this->load->view('templates/dash-sidebar', $data);
+            $this->load->view($data['page']['url'], $data);
+            $this->load->view('templates/dash-footer', $data);
+        }
+    }
 }

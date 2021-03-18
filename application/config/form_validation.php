@@ -196,10 +196,64 @@ $config = [
         [
             'field' => 'email',
             'label' => 'Email',
-            'rules' => 'required|trim|valid_email|is_unique[user.email]',
+            'rules' => 'required|trim|valid_email',
+            'errors' => [
+                'required' => 'Tidak Boleh Kosong !'
+            ]
+        ]
+    ],
+    'super/akunsuper/pass' => [
+        [
+            'field' => 'pass0',
+            'label' => 'Password',
+            'rules' => 'trim|required',
+            'errors' => [
+                'required' => 'Tidak Boleh Kosong !'
+            ]
+        ],
+        [
+            'field' => 'pass1',
+            'label' => 'Password',
+            'rules' => 'required|trim|min_length[5]',
             'errors' => [
                 'required' => 'Tidak Boleh Kosong !',
-                'is_unique' => 'Email ini telah digunakan !'
+                'min_length' => 'Terlalu Pendek !'
+            ]
+        ],
+        [
+            'field' => 'pass2',
+            'label' => 'Password',
+            'rules' => 'required|trim|matches[pass1]',
+            'errors' => [
+                'required' => 'Tidak Boleh Kosong !',
+                'matches' => 'Tidak Cocok dengan Password Baru !'
+            ]
+        ]
+    ],
+    'super/akunsuper/info' => [
+        [
+            'field' => 'nama',
+            'label' => 'Nama Lengkap',
+            'rules' => 'trim|required',
+            'errors' => [
+                'required' => 'Tidak Boleh Kosong !'
+            ]
+        ],
+        [
+            'field' => 'username',
+            'label' => 'username',
+            'rules' => 'required|trim|alpha_numeric',
+            'errors' => [
+                'required' => 'Tidak Boleh Kosong !',
+                'alpha_numeric' => 'Tidak boleh mengandung spasi !'
+            ]
+        ],
+        [
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'required|trim|valid_email',
+            'errors' => [
+                'required' => 'Tidak Boleh Kosong !'
             ]
         ]
     ]

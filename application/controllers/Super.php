@@ -37,7 +37,7 @@ class Super extends CI_Controller
         $data['user'] = $this->Admin_model->getDataAdmin('login');
         $data['image'] = $data['user']['foto'];
         $data['header'] = $this->Menu_model->headerQuery();
-        $data['page'] = $this->Menu_model->getMenuById(18);
+        $data['page'] = $this->Menu_model->getMenuById(17);
         $data['keterangan'] = $this->Global_model->getKeteranganApp();
 
         $this->load->view('templates/dash-header', $data);
@@ -53,7 +53,7 @@ class Super extends CI_Controller
         $data['user'] = $this->Admin_model->getDataAdmin('login');
         $data['image'] = $data['user']['foto'];
         $data['header'] = $this->Menu_model->headerQuery();
-        $data['page'] = $this->Menu_model->getMenuById(17);
+        $data['page'] = $this->Menu_model->getMenuById(18);
         $data['keterangan'] = $this->Global_model->getKeteranganApp();
 
         if ($action == 'pass') {

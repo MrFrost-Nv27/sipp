@@ -35,6 +35,8 @@ v1.12
 Menambahkan fitur profil dan edit profil admin
 
 v1.13
+Fix bug aktivasi tidak dapat diklik
+
 v1.14
 v1.15
 v1.16

@@ -40,6 +40,7 @@ var Tawk_API = Tawk_API || {},
 <script>
 var logout = '<?= base_url('masuk/logout'); ?>';
 var getDetail = '<?= base_url('operator/getdetail'); ?>';
+var versiapp = '<?= $keterangan[0]; ?>';
 </script>
 <script type="text/javascript" src="<?= base_url('assets/'); ?>dashboard/scripts/main.js"></script>
 <script type="text/javascript" src="<?= base_url('assets/'); ?>vendor/sweetalert2/sweetalert2.all.min.js"></script>

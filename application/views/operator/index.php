@@ -106,9 +106,22 @@ $nomer = 1;
                             <td><?= $siswadetail['nama']; ?></td>
                             <td><?= date("d-F-Y", $siswadetail['date_created']); ?></td>
                             <td>
-                                <a class="badge badge-pill badge-warning"
-                                    href="<?= base_url('operator/index/detail/'); ?><?= $siswadetail['id_santri']; ?>"><i
-                                        class=" fa fa-info-circle fa-w-20"></i></a>
+                                <div class="dropdown">
+                                    <a class="badge badge-pill badge-light" href="#" role="button" id="dropdownMenuLink"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v fa-w-20"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Edit</a>
+                                        <a class="dropdown-item"
+                                            href="<?= base_url('operator/index/detail/'); ?><?= $siswadetail['id_santri']; ?>">Detail</a>
+                                        <?php if ($siswadetail['is_active'] == 0) : ?>
+                                        <a class="dropdown-item" href="#">Aktivasi Akun</a>
+                                        <?php endif; ?>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Hapus</a>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <?php if ($siswadetail['is_active'] == 0) : ?>

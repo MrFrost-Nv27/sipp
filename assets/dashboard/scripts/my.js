@@ -3,8 +3,8 @@ $(document).ready(function() {
     $("small").addClass("animatedDelay jackInTheBox");
     $("#tentang").click(function() {
         Swal.fire({
-            title: 'SIPP v1',
-            text: 'Sistem Informasi Pondok Pesantren',
+            title: 'SIPP v' + versiapp,
+            text: 'Sistem Informasi Pendidikan Pesantren',
             icon: 'success'
         });
     });

@@ -2,6 +2,7 @@
 $nomer = 1;
 
 ?>
+<?= $this->session->flashdata('message'); ?>
 <!-- Content -->
 <div class="row">
     <div class="col-md-5">
@@ -70,7 +71,7 @@ $nomer = 1;
                 </div>
             </div>
             <div class="card-body">
-                <table class="mb-0 table table-hover table-striped">
+                <table class="mb-0 table table-hover table-striped" id="datasantri">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -112,14 +113,18 @@ $nomer = 1;
                                         <i class="fa fa-ellipsis-v fa-w-20"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Edit</a>
+                                        <!-- <a class="dropdown-item" href="#">Edit</a> -->
                                         <a class="dropdown-item"
                                             href="<?= base_url('operator/index/detail/'); ?><?= $siswadetail['id_santri']; ?>">Detail</a>
                                         <?php if ($siswadetail['is_active'] == 0) : ?>
-                                        <a class="dropdown-item" href="#">Aktivasi Akun</a>
+                                        <a class="dropdown-item" href="#" id="AktivasiAkun">Aktivasi Akun</a>
+                                        <script>
+                                        var aktivasi = '<?= base_url('operator/index/aktivasi/');
+                                                                        echo $siswadetail['login_username']; ?>';
+                                        </script>
                                         <?php endif; ?>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Hapus</a>
+                                        <a class="dropdown-item" href="#" id="hapusAkun">Hapus</a>
                                     </div>
                                 </div>
                             </td>

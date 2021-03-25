@@ -15,7 +15,7 @@ class Operator extends CI_Controller
     }
 
     public $konfig;
-    public function index($iddetail = null)
+    public function index($aksi = null)
     {
         $this->load->library('Pagination');
 
@@ -63,8 +63,12 @@ class Operator extends CI_Controller
             $this->load->view('templates/dash-header', $data);
             $this->load->view('templates/dash-topbar', $data);
             $this->load->view('templates/dash-sidebar', $data);
-            if ($iddetail == 'detail') {
+            if ($aksi == 'detail') {
                 $this->detail($this->uri->segment(4));
+            } else if ($aksi == 'aktivasi') {
+                $this->aktivasi($this->uri->segment(4));
+            } else if ($aksi == 'hapus') {
+                $this->hapus($this->uri->segment(4));
             } else {
                 $this->load->view($data['page']['url'], $data);
             }
@@ -85,5 +89,18 @@ class Operator extends CI_Controller
             'id_sekolah' => $data['user']['id_lembaga']
         ]);
         $this->load->view('operator/detail-santri', $data);
+    }
+
+    public function aktivasi($username)
+    {
+        $this->db->set('is_active', 1);
+        $this->db->where('username', $username);
+        $this->db->update('user');
+        $this->Global_model->berhasilNotify('Akun Berhasil Diaktivasi !');
+        redirect('operator/index');
+    }
+
+    public function hapus($id)
+    {
     }
 }

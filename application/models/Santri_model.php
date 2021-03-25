@@ -79,4 +79,9 @@ class Santri_model extends CI_Model
             return $this->db->get()->result_array();
         }
     }
+
+    public function hapusDataSantri($iduser, $idsantri)
+    {
+        # code...
+    }
 }

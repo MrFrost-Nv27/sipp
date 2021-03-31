@@ -74,79 +74,16 @@ $nomer = 1;
                 <table class="mb-0 table table-hover table-striped" id="datasantri">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Nama Lengkap</th>
                             <th>Tanggal Daftar</th>
                             <th>Aksi</th>
                             <th>Aktif</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if ($jumlahdaftar == 0) : ?>
-                        <tr>
-                            <td colspan="5">
-                                <div class="alert alert-success" role="alert">
-                                    Daftar Calon Santri Kosong
-                                </div>
-                            </td>
-                        </tr>
-                        <?php elseif (empty($santri)) : ?>
-                        <tr>
-                            <td colspan="5">
-                                <div class="alert alert-danger" role="alert">
-                                    Data Tidak Ditemukan !
-                                </div>
-                            </td>
-                        </tr>
-                        <?php else :
-                            foreach ($santri as $siswa) :
-                                $siswadetail = $this->Santri_model->getDataSantri('setid', $siswa['id_santri']);
-                            ?>
-                        <tr>
-                            <th scope="row"><?= ++$start; ?></th>
-                            <td><?= $siswadetail['nama']; ?></td>
-                            <td><?= date("d-F-Y", $siswadetail['date_created']); ?></td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="badge badge-pill badge-light" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v fa-w-20"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <!-- <a class="dropdown-item" href="#">Edit</a> -->
-                                        <a class="dropdown-item"
-                                            href="<?= base_url('operator/index/detail/'); ?><?= $siswadetail['id_santri']; ?>">Detail</a>
-                                        <?php if ($siswadetail['is_active'] == 0) : ?>
-                                        <a class="dropdown-item" href="#" id="AktivasiAkun">Aktivasi Akun</a>
-                                        <script>
-                                        var aktivasi = '<?= base_url('operator/index/aktivasi/');
-                                                                        echo $siswadetail['login_username']; ?>';
-                                        </script>
-                                        <?php endif; ?>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" id="hapusAkun">Hapus</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <?php if ($siswadetail['is_active'] == 0) : ?>
-                                <div class="badge badge-pill badge-danger" data-toggle="tooltip" data-placement="top"
-                                    title="Akun belum diaktivasi !"><i class="fa fa-w-20"></i></div>
-                                <?php elseif ($siswadetail['is_active'] == 1) : ?>
-                                <div class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="top"
-                                    title="Akun sudah diaktivasi"><i class="fa fa-check fa-w-20"></i></div>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                        <?php //$nomer++;
-                                ?>
-                        <?php endforeach; ?>
-                        <?php endif; ?>
+                    <tbody align="center">
                     </tbody>
                 </table>
-                <?php if ($jumlahdaftar !== 0) : ?>
-                <?= $this->pagination->create_links(); ?>
-                <?php endif; ?>
             </div>
         </div>
     </div>

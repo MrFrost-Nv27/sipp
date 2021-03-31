@@ -17,44 +17,13 @@ class Operator extends CI_Controller
     public $konfig;
     public function index($aksi = null)
     {
-        $this->load->library('Pagination');
-
-        // Ambil data keyword
-        if ($this->input->post('submit')) {
-            $data['keyword'] = $this->input->post('keyword');
-            $this->session->set_userdata('sipp_keyword', $data['keyword']);
-        } else {
-            $data['keyword'] = $this->session->userdata('sipp_keyword');
-        }
-
         $data['user'] = $this->Operator_model->getDataOperator('login');
         $data['image'] = $data['user']['foto'];
         $data['header'] = $this->Menu_model->headerQuery();
         $data['page'] = $this->Menu_model->getMenuById(3);
         $data['keterangan'] = $this->Global_model->getKeteranganApp();
 
-        // Pagination
-        $this->db->like('nama', $data['keyword']);
-        $this->db->from('santri');
-        $this->db->join('santri_daftar', 'santri_daftar.id_santri = santri.id');
-        $this->db->where('id_sekolah', $data['user']['id_lembaga']);
-        $this->db->where('is_terdaftar = 0');
-        $config['total_rows'] = $this->db->count_all_results();
-        $data['total_rows'] = $config['total_rows'];
-        $config['per_page'] = 5;
         $data['jumlahdaftar'] = $this->Santri_model->getDataSantri('jumlahlembaga', $data['user']['id_lembaga'], true);
-
-        // Initialize
-        $this->pagination->initialize($config);
-
-        $data['start'] = $this->uri->segment(3);
-        $data['santri'] = $this->Santri_model->getDataSantri('limit', $konfig = [
-            'limit' => $config['per_page'],
-            // 'start' => $data['start'],
-            'start' => $data['start'],
-            'keyword' => $data['keyword'],
-            'lembaga' => $data['user']['id_lembaga']
-        ], true);
 
         if ($this->uri->segment(3) == 'export') {
             $santri = $this->Santri_model->getDataSantri('setlembaga', $data['user']['id_lembaga'], true);
@@ -65,14 +34,35 @@ class Operator extends CI_Controller
             $this->load->view('templates/dash-sidebar', $data);
             if ($aksi == 'detail') {
                 $this->detail($this->uri->segment(4));
-            } else if ($aksi == 'aktivasi') {
-                $this->aktivasi($this->uri->segment(4));
-            } else if ($aksi == 'hapus') {
-                $this->hapus($this->uri->segment(4));
             } else {
                 $this->load->view($data['page']['url'], $data);
             }
             $this->load->view('templates/dash-footer', $data);
+            // $this->load->view('operator/ajax');
+        }
+    }
+
+    public function datasantri()
+    {
+
+        $datasantri = $this->datamahasiswa_model->getdatamahasiswa();
+        $no = 1;
+        foreach ($datasantri as  $santri) {
+            $tbody = array();
+            $tbody[] = $no++;
+            $tbody[] = $santri['nama_mahasiswa'];
+            $tbody[] = $santri['alamat'];
+            $aksi = "<button class='btn btn-success ubah-mahasiswa' data-toggle='modal' data-id=" . $santri['id'] . ">Ubah</button>" . ' ' . "<button class='btn btn-danger hapus-mahasiswa' id='id' data-toggle='modal' data-id=" . $santri['id'] . ">Hapus</button>";
+            $tbody[] = $aksi;
+            $aktif = "is_active";
+            $tbody[] = $aktif;
+            $data[] = $tbody;
+        }
+
+        if ($datasantri) {
+            echo json_encode(array('data' => $data));
+        } else {
+            echo json_encode(array('data' => 0));
         }
     }
 
@@ -89,18 +79,5 @@ class Operator extends CI_Controller
             'id_sekolah' => $data['user']['id_lembaga']
         ]);
         $this->load->view('operator/detail-santri', $data);
-    }
-
-    public function aktivasi($username)
-    {
-        $this->db->set('is_active', 1);
-        $this->db->where('username', $username);
-        $this->db->update('user');
-        $this->Global_model->berhasilNotify('Akun Berhasil Diaktivasi !');
-        redirect('operator/index');
-    }
-
-    public function hapus($id)
-    {
     }
 }

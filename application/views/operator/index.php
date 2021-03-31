@@ -1,29 +1,5 @@
-<?php
-$nomer = 1;
-
-?>
 <?= $this->session->flashdata('message'); ?>
 <!-- Content -->
-<div class="row">
-    <div class="col-md-5">
-        <form action="<?= base_url('operator/index'); ?>" method="POST">
-            <div class="input-group mb-3">
-                <?php if ($jumlahdaftar == 0) : ?>
-                <input type="text" class="form-control" placeholder="Cari nama siswa.." name="keyword"
-                    autocomplete="off" autofocus disabled>
-                <div class="input-group-append">
-                    <input class="btn btn-primary" type="submit" name="submit" value="Cari" disabled>
-                    <?php else : ?>
-                    <input type="text" class="form-control" placeholder="Cari nama siswa.." name="keyword"
-                        autocomplete="off" autofocus>
-                    <div class="input-group-append">
-                        <input class="btn btn-primary" type="submit" name="submit" value="Cari">
-                        <?php endif; ?>
-                    </div>
-                </div>
-        </form>
-    </div>
-</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="main-card mb-3 card">
@@ -72,7 +48,7 @@ $nomer = 1;
             </div>
             <div class="card-body">
                 <table class="mb-0 table table-hover table-striped" id="datasantri">
-                    <thead>
+                    <thead align="center">
                         <tr>
                             <th>No</th>
                             <th>Nama Lengkap</th>

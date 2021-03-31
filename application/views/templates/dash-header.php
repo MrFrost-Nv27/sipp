@@ -31,7 +31,7 @@
     <!-- Preloader -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/'); ?>css/preloader.css">
     <!--  -->
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/DataTables/js/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/DataTables/css/jquery.dataTables.min.css">
 </head>
 
 <body>

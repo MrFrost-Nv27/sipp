@@ -32,36 +32,4 @@ $(document).ready(function() {
             }
         })
     });
-    $("#AktivasiAkun").click(function() {
-        Swal.fire({
-            title: 'Aktivasi Akun',
-            text: "Apakah anda yakin, akan mengaktivasi akun ini, ?",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaa',
-            confirmButtonText: 'Aktivasi',
-            showCancelButton: true,
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                location.href = aktivasi;
-            }
-        })
-    });
-    $("#hapusAkun").click(function() {
-        Swal.fire({
-            title: 'Hapus Akun',
-            text: "Apakah anda yakin akan menghapus akun ini, ?",
-            icon: 'warning',
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Hapus',
-            showCancelButton: true,
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                location.href = aktivasi;
-            }
-        })
-    });
 });

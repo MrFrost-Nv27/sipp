@@ -54,11 +54,11 @@ class Operator extends CI_Controller
             $tbody[] = $no++;
             $tbody[] = $santri['nama'];
             $tbody[] = date("d-F-Y", $santri['date_created']);
-            $aksi = "<div class='dropdown'><a class='badge badge-pill badge-light' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'><i class='fa fa-ellipsis-v fa-w-20'></i></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item ubah-santri' href='#' data-toggle='modal' data-id=" . $santri['id_santri'] . ">Edit</a><a class='dropdown-item' href=" . $linkdetail . $santri['id_santri'] . ">Detail</a>";
+            $aksi = "<div class='dropdown'><a class='badge badge-pill badge-light' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'><i class='fa fa-ellipsis-v fa-w-20'></i></a><div class='dropdown-menu' aria-labelledby='dropdownMenuLink'><a class='dropdown-item ubah-santri' href='#' data-toggle='modal' data-idsantri=" . $santri['id_santri'] . " data-iduser=" . $santri['login_id'] . ">Edit</a><a class='dropdown-item' href=" . $linkdetail . $santri['id_santri'] . ">Detail</a>";
             if ($santri['is_active'] == 0) :
-                $aksi .= "<a class='dropdown-item aktivasi-santri' href='#' id='id' data-toggle='modal' data-id=" . $santri['id_santri'] . ">Aktivasi Akun</a>";
+                $aksi .= "<a class='dropdown-item aktivasi-santri' href='#' id='id' data-toggle='modal' data-idsantri=" . $santri['id_santri'] . " data-iduser=" . $santri['login_id'] . ">Aktivasi Akun</a>";
             endif;
-            $aksi .= "<div class='dropdown-divider'></div><a class='dropdown-item hapus-santri' href='#' id='id' data-toggle='modal' data-id=" . $santri['id_santri'] . ">Hapus</a></div></div>";
+            $aksi .= "<div class='dropdown-divider'></div><a class='dropdown-item hapus-santri' href='#' id='id' data-toggle='modal' data-idsantri=" . $santri['id_santri'] . " data-iduser=" . $santri['login_id'] . ">Hapus</a></div></div>";
             if ($santri['is_active'] == 0) :
                 $aktif = "<div class='badge badge-pill badge-danger' data-toggle='tooltip' data-placement='top' title='Akun belum diaktivasi !'><i class='fa fa-w-20'></i></div>";
             elseif ($santri['is_active'] == 1) :
@@ -89,5 +89,15 @@ class Operator extends CI_Controller
             'id_sekolah' => $data['user']['id_lembaga']
         ]);
         $this->load->view('operator/detail-santri', $data);
+    }
+
+    public function hapussantri()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $iduser = $this->input->post('iduser');
+        $idsantri = $this->input->post('idsantri');
+
+        $data = $this->Santri_model->hapusDataSantri($iduser, $idsantri);
+        echo json_encode($data);
     }
 }

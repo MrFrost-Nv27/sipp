@@ -82,6 +82,16 @@ class Santri_model extends CI_Model
 
     public function hapusDataSantri($iduser, $idsantri)
     {
-        # code...
+        $this->hapusDataUser($iduser);
+        $tables = array('santri', 'santri_daftar', 'santri_berkas', 'santri_detail', 'santri_ortu', 'santri_sekolah', 'santri_pesantren');
+        $this->db->where('id', $idsantri);
+        $this->db->where('id_santri', $idsantri);
+        return $this->db->delete($tables);
+    }
+
+    public function hapusDataUser($iduser)
+    {
+        $this->db->where('id', $iduser);
+        return $this->db->delete('user');
     }
 }

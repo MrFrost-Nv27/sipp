@@ -6,9 +6,15 @@
             <div class="card-header"><?= $user['nama_lembaga']; ?>
                 <div class="btn-actions-pane-right">
                     <div role="group" class="btn-group-sm btn-group">
-                        <button class="mb-2 mr-2 btn btn-focus">Jumlah Calon Siswa Baru :
-                            <?= $jumlahdaftar; ?></button>
-                        <div class="d-inline-block dropdown">
+                        <button class="mb-2 mr-2 btn btn-success" id="refreshdata"><span
+                                class="btn-icon-wrapper opacity-7">
+                                <i class="fa fa-fw" aria-hidden="true" title="Refresh data"></i>
+                            </span></button>
+                        <button class="mb-2 mr-2 btn btn-primary" data-toggle="modal" data-target="#tambahsantri"><span
+                                class="btn-icon-wrapper pr-2 opacity-7">
+                                <i class="fa fa-plus fa-w-20"></i>
+                            </span>Tambah</button>
+                        <div class="d-inline-block dropdown" id="exportdata">
                             <?php if ($jumlahdaftar == 0) :
                                 $classtombol = 'btn-shadow dropdown-toggle btn btn-info disabled';
                             else :

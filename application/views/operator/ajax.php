@@ -1,3 +1,37 @@
+<!-- Modal untuk tambah data santri -->
+<div class="modal fade" id="tambahsantri" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Santri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formtambahdatasantri">
+                    <div class="form-group row">
+                        <label for="inputnama" class="col-sm-2 col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="nama" placeholder="nama" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Alamat</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="alamat" placeholder="alamat" required>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Tambah Data Santri</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
 $(document).ready(function() {
     // ini adalah fungsi untuk mengambil data santri dan di include ke dalam datatable
@@ -8,14 +42,59 @@ $(document).ready(function() {
         "order": []
     })
 
+    // Fungsi untuk Refresh data
+    $('#refreshdata').on('click', function() {
+        datasantri.ajax.reload(null, false)
+    });
+
+    // fungsi untuk menambah data  
+    $('#formtambahdatasantri').on('submit', function() {
+        var nama = $('#nama').val(); // diambil dari id nama yang ada diform modal
+        var alamat = $('#alamat').val(); // diambil dari id alamat yanag ada di form modal 
+
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('operator/index/add') ?>",
+            beforeSend: function() {
+                swal.fire({
+                    title: 'Menunggu',
+                    html: 'Memproses data',
+                    didOpen: () => {
+                        swal.showLoading()
+                    }
+                })
+            },
+            data: {
+                nama: nama,
+                alamat: alamat
+            }, // ambil datanya dari form yang ada di variabel
+            dataType: "JSON",
+            success: function(data) {
+                datasantri.ajax.reload(null, false);
+                swal.fire({
+                    icon: 'success',
+                    title: 'Tambah Santri',
+                    text: 'Anda Berhasil Menambah Mahasiswa'
+                })
+                // bersihkan form pada modal
+                $('#tambahsantri').modal('hide');
+                // tutup modal
+                $('#nama').val('');
+                $('#alamat').val('');
+
+            }
+        })
+        return false;
+    });
+
     // fungsi untuk Aktivasi Akun Santri
     // pilih selector dari table id datasantri dengan class .aktivasi-santri
     $('#datasantri').on('click', '.aktivasi-santri', function() {
         var idsantri = $(this).data('idsantri');
         var iduser = $(this).data('iduser');
         swal.fire({
-            title: 'Konfirmasi',
-            text: "Anda ingin mengaktivasi akun ini ?",
+            title: 'Aktivasi Akun',
+            text: "Anda ingin mengaktivasi akun ini ? Sebelum mengaktivasi akun, harap konfirmasi terlebih dahulu kepada pendaftar !",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Aktivasi',
@@ -63,8 +142,8 @@ $(document).ready(function() {
         var idsantri = $(this).data('idsantri');
         var iduser = $(this).data('iduser');
         swal.fire({
-            title: 'Konfirmasi',
-            text: "Anda ingin menghapus akun ini ?",
+            title: 'Hapus Akun',
+            text: "Anda ingin menghapus akun ini ? Harap tinjau kembali sebelum menghapus akun",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Hapus',

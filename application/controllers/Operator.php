@@ -50,6 +50,19 @@ class Operator extends CI_Controller
 
                     $data = $this->Santri_model->hapusDataSantri($iduser, $idsantri);
                     echo json_encode($data);
+                } elseif ($this->uri->segment(3) == 'add') {
+                    // didapat dari ajax yang dimana data{nama:nama,alamat:alamat}
+                    $nama = $this->input->post('nama');
+                    $alamat = $this->input->post('alamat');
+
+                    $tambahsantri = array(
+                        'data1' => $nama,
+                        'data2' => $alamat
+                    );
+
+                    $data = $this->Santri_model->tambahDataSantri($tambahsantri);
+
+                    echo json_encode($data);
                 }
             }
             $this->load->view('templates/dash-footer', $data);

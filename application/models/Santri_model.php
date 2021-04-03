@@ -80,6 +80,11 @@ class Santri_model extends CI_Model
         }
     }
 
+    public function tambahDataSantri($data)
+    {
+        return $this->db->insert('coba', $data);
+    }
+
     public function hapusDataSantri($iduser, $idsantri)
     {
         $this->hapusDataUser($iduser);

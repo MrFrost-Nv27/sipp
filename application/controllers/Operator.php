@@ -37,6 +37,20 @@ class Operator extends CI_Controller
                 $this->detail($this->uri->segment(4));
             } else {
                 $this->load->view($data['page']['url'], $data);
+                if ($this->uri->segment(3) == 'actv') {
+                    // id yang telah diparsing pada ajax ajax.php data{id:id}
+                    $iduser = $this->input->post('iduser');
+
+                    $data = $this->Santri_model->aktivasiAkun($iduser);
+                    echo json_encode($data);
+                } elseif ($this->uri->segment(3) == 'hapussantri') {
+                    // id yang telah diparsing pada ajax ajax.php data{id:id}
+                    $iduser = $this->input->post('iduser');
+                    $idsantri = $this->input->post('idsantri');
+
+                    $data = $this->Santri_model->hapusDataSantri($iduser, $idsantri);
+                    echo json_encode($data);
+                }
             }
             $this->load->view('templates/dash-footer', $data);
             $this->load->view('operator/ajax');
@@ -89,15 +103,5 @@ class Operator extends CI_Controller
             'id_sekolah' => $data['user']['id_lembaga']
         ]);
         $this->load->view('operator/detail-santri', $data);
-    }
-
-    public function hapussantri()
-    {
-        // id yang telah diparsing pada ajax ajax.php data{id:id}
-        $iduser = $this->input->post('iduser');
-        $idsantri = $this->input->post('idsantri');
-
-        $data = $this->Santri_model->hapusDataSantri($iduser, $idsantri);
-        echo json_encode($data);
     }
 }

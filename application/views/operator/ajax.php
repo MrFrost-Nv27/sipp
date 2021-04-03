@@ -54,7 +54,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "post",
-            url: "<?= base_url('operator/index/add') ?>",
+            url: "<?= base_url('operator/add') ?>",
             beforeSend: function() {
                 swal.fire({
                     title: 'Menunggu',
@@ -71,17 +71,17 @@ $(document).ready(function() {
             dataType: "JSON",
             success: function(data) {
                 datasantri.ajax.reload(null, false);
+                // bersihkan form pada modal
                 swal.fire({
                     icon: 'success',
                     title: 'Tambah Santri',
                     text: 'Anda Berhasil Menambah Mahasiswa'
                 })
-                // bersihkan form pada modal
                 $('#tambahsantri').modal('hide');
                 // tutup modal
                 $('#nama').val('');
                 $('#alamat').val('');
-
+                console.log('Insert data berhasil');
             }
         })
         return false;

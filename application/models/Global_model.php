@@ -113,4 +113,30 @@ class Global_model extends CI_Model
     {
         return $this->db->get_where('user_role', ['id' => $role_id])->row_array();
     }
+
+    public function getAdminEmailAcc()
+    {
+        $username = $this->db->get_where('myconfig', ['ckey' => 'admin-email address'])->row_array();
+        $password = $this->db->get_where('myconfig', ['ckey' => 'admin-email password'])->row_array();
+        $data = [
+            "username" => $username['cvalue'],
+            "password" => $password['cvalue']
+        ];
+        return $data;
+    }
+
+    public function getCaptchaToken()
+    {
+        $local_secret = $this->db->get_where('myconfig', ['ckey' => 'captcha-local secret key'])->row_array();
+        $local_site = $this->db->get_where('myconfig', ['ckey' => 'captcha-local site key'])->row_array();
+        $sipp_secret = $this->db->get_where('myconfig', ['ckey' => 'captcha-sipp secret key'])->row_array();
+        $sipp_site = $this->db->get_where('myconfig', ['ckey' => 'captcha-sipp site key'])->row_array();
+        $data = [
+            "local_secret" => $local_secret['cvalue'],
+            "local_site" => $local_site['cvalue'],
+            "sipp_secret" => $sipp_secret['cvalue'],
+            "sipp_site" => $sipp_site['cvalue']
+        ];
+        return $data;
+    }
 }

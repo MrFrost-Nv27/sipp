@@ -6,10 +6,9 @@ class Santri extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Global_model');
         $this->load->model('Menu_model');
-        $this->load->model('Santri_model');
         is_logged_in();
+        cekAksesCtl();
     }
 
     public function index()

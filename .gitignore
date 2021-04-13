@@ -83,8 +83,6 @@ application/logs/*
 # End of https://www.toptal.com/developers/gitignore/api/codeigniter,linux,visualstudiocode
 
 # Penting, berisi kredensial dan key
-application/config/database.php
-application/models/Daftar_model.php
 data/credentials.json
 data_callback.php
 Drive API Key.txt

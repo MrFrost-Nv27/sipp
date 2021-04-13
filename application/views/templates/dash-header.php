@@ -32,6 +32,14 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/'); ?>css/preloader.css">
     <!--  -->
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/DataTables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="<?= base_url('assets/'); ?>fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="<?= base_url('assets/'); ?>fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/'); ?>vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/'); ?>vendor/daterangepicker/daterangepicker.css">
 </head>
 
 <body>

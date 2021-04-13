@@ -117,7 +117,7 @@
         </div>
 
     </div>
-    <div class="g-recaptcha" data-sitekey="6Ld4mTwaAAAAADq9kcc-2N7pUo4-q7B1V5qvPHyb"></div>
+    <div class="g-recaptcha" data-sitekey="<?= $key['local_site']; ?>"></div>
     <div class="container-login100-form-btn p-t-10">
         <div class="wrap-login100-form-btn">
             <div class="login100-form-bgbtn"></div>

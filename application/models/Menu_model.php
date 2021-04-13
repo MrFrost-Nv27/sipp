@@ -9,7 +9,7 @@ class Menu_model extends CI_Model
 
         $this->db->select('user_menu_heading.id,judul');
         $this->db->from('user_menu_heading');
-        $this->db->join('user_access_menu', 'user_menu_heading.id = user_access_menu.heading_id');
+        $this->db->join('user_menu_query', 'user_menu_heading.id = user_menu_query.heading_id');
         $this->db->distinct();
         $this->db->where('role_id = ', $role_id);
         $this->db->order_by('user_menu_heading.indeks', 'ASC');
@@ -32,8 +32,8 @@ class Menu_model extends CI_Model
         $role_id = $this->session->userdata('sipp_role_id');
         $queryMenu = "SELECT user_menu.* 
                       FROM user_menu 
-                      JOIN user_access_menu 
-                      ON user_menu.id = user_access_menu.menu_id
+                      JOIN user_menu_query 
+                      ON user_menu.id = user_menu_query.menu_id
                       WHERE role_id = $role_id 
                       AND user_menu.heading_id = $header_id
                       AND is_submenu != 2
@@ -62,8 +62,8 @@ class Menu_model extends CI_Model
         $role_id = $this->session->userdata('sipp_role_id');
         $querySubMenu = "SELECT user_menu.* 
         FROM user_menu 
-        JOIN user_access_menu 
-        ON user_menu.id = user_access_menu.menu_id
+        JOIN user_menu_query 
+        ON user_menu.id = user_menu_query.menu_id
         WHERE role_id = $role_id 
         AND user_menu.heading_id = $header_id
         AND is_submenu = 2

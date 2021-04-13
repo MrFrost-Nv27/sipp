@@ -6,10 +6,8 @@ class Masuk extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Global_model');
 		$this->load->model('Sekolah_model');
 		$this->load->model('Daftar_model');
-		$this->load->model('Santri_model');
 	}
 
 	public function index()
@@ -94,7 +92,7 @@ class Masuk extends CI_Controller
 	{
 		// Check Login
 		$this->Global_model->login_cek();
-
+		$data['key'] = $this->Global_model->getCaptchaToken();
 		if ($this->form_validation->run() == false) {
 			$data['jk'] = $this->Global_model->getListJenisKelamin();
 			$data['agama'] = $this->Global_model->getListAgama();
@@ -107,9 +105,46 @@ class Masuk extends CI_Controller
 			$this->load->view('templates/masuk-footer', $data);
 		} else {
 
-			$status = $this->Daftar_model->captchaVerify();
+			$status = $this->Daftar_model->captchaVerify($data['key']);
 			if ($status['success']) {
-				$this->Daftar_model->santriDaftar();
+				$admin = [
+					'email' => $this->Global_model->getAdminEmailAcc()
+				];
+				$jenisdaftar = $this->input->post('jenisdaftar');
+				$id_sekolah = htmlspecialchars($this->input->post('daftarsekolah', true));
+				$asalsekolah = htmlspecialchars($this->input->post('asalsekolah', true));
+				$nisn = htmlspecialchars($this->input->post('nisn'));
+				$nama = ucwords(strtolower(((htmlspecialchars($this->input->post('nama', true))))));
+				$tmplahir = htmlspecialchars($this->input->post('tempatlahir', true));
+				$tgllahir = $this->input->post('tgllahir', true);
+				$jeniskelamin = $this->input->post('jeniskelamin', true);
+				$agama = htmlspecialchars($this->input->post('agama', true));
+				$desa = htmlspecialchars($this->input->post('desa', true));
+				$kec = htmlspecialchars($this->input->post('kecamatan', true));
+				$kab = htmlspecialchars($this->input->post('kabupaten', true));
+				$nohp = htmlspecialchars($this->input->post('nohp', true));
+				$email = htmlspecialchars($this->input->post('email', true));
+
+				$tambahsantri = array(
+					'jenisdaftar' => $jenisdaftar,
+					'asalsekolah' => $asalsekolah,
+					'nisn' => $nisn,
+					'nama' => $nama,
+					'tmplahir' => $tmplahir,
+					'tgllahir' => $tgllahir,
+					'jeniskelamin' => $jeniskelamin,
+					'agama' => $agama,
+					'desa' => $desa,
+					'kec' => $kec,
+					'kab' => $kab,
+					'nohp' => $nohp,
+					'email' => $email,
+					'id_sekolah' => $id_sekolah,
+					'admin_email' => $admin['email']['username'],
+					'admin_password' => $admin['email']['password']
+				);
+
+				$this->Daftar_model->santriDaftar($tambahsantri);
 				$this->Global_model->berhasilNotify('Selamat ! anda berhasil mendaftar. kami telah mengirimi pesan yang berisi tautan ke email anda untuk aktivasi akun. silahkan aktivasi terlebih dahulu agar bisa masuk dan melanjutkan ke tahap berikutnya.');
 				redirect('masuk');
 			} else {

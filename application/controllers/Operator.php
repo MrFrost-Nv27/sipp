@@ -6,22 +6,26 @@ class Operator extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Global_model');
         $this->load->model('Sekolah_model');
         $this->load->model('Menu_model');
         $this->load->model('Operator_model');
-        $this->load->model('Santri_model');
         is_logged_in();
+        cekAksesCtl();
     }
 
     public $konfig;
     public function index($aksi = null)
     {
-        $data['user'] = $this->Operator_model->getDataOperator('login');
+        $data = [
+            'jk' => $this->Global_model->getListJenisKelamin(),
+            'user' => $this->Operator_model->getDataOperator('login'),
+            'agama' => $this->Global_model->getListAgama(),
+            'jenisDaftar' => $this->Sekolah_model->getListjenisDaftar(),
+            'header' => $this->Menu_model->headerQuery(),
+            'page' => $this->Menu_model->getMenuById(3),
+            'keterangan' => $this->Global_model->getKeteranganApp()
+        ];
         $data['image'] = $data['user']['foto'];
-        $data['header'] = $this->Menu_model->headerQuery();
-        $data['page'] = $this->Menu_model->getMenuById(3);
-        $data['keterangan'] = $this->Global_model->getKeteranganApp();
         $data['datasantri'] = $this->Santri_model->getDataSantri('setlembaga', $data['user']['id_lembaga'], true);
 
         $data['jumlahdaftar'] = $this->Santri_model->getDataSantri('jumlahlembaga', $data['user']['id_lembaga'], true);
@@ -31,28 +35,14 @@ class Operator extends CI_Controller
             $this->Operator_model->export($this->uri->segment(4), $santri);
         } else {
             $this->load->view('templates/dash-header', $data);
-            $this->load->view('templates/dash-topbar', $data);
-            $this->load->view('templates/dash-sidebar', $data);
+            $this->load->view('templates/dash-topbar');
+            $this->load->view('templates/dash-sidebar');
             if ($aksi == 'detail') {
                 $this->detail($this->uri->segment(4));
             } else {
-                $this->load->view($data['page']['url'], $data);
-                if ($this->uri->segment(3) == 'actv') {
-                    // id yang telah diparsing pada ajax ajax.php data{id:id}
-                    $iduser = $this->input->post('iduser');
-
-                    $data = $this->Santri_model->aktivasiAkun($iduser);
-                    echo json_encode($data);
-                } elseif ($this->uri->segment(3) == 'hapussantri') {
-                    // id yang telah diparsing pada ajax ajax.php data{id:id}
-                    $iduser = $this->input->post('iduser');
-                    $idsantri = $this->input->post('idsantri');
-
-                    $data = $this->Santri_model->hapusDataSantri($iduser, $idsantri);
-                    echo json_encode($data);
-                }
+                $this->load->view($data['page']['url']);
             }
-            $this->load->view('templates/dash-footer', $data);
+            $this->load->view('templates/dash-footer');
             $this->load->view('operator/ajax');
         }
     }
@@ -76,7 +66,11 @@ class Operator extends CI_Controller
             if ($santri['is_active'] == 0) :
                 $aktif = "<div class='badge badge-pill badge-danger' data-toggle='tooltip' data-placement='top' title='Akun belum diaktivasi !'><i class='fa fa-w-20'></i></div>";
             elseif ($santri['is_active'] == 1) :
-                $aktif = "<div class='badge badge-pill badge-success' data-toggle='tooltip' data-placement='top' title='Akun sudah diaktivasi'><i class='fa fa-check fa-w-20'></i></div>";
+                if ($santri['is_terdaftar'] == 0) :
+                    $aktif = "<div class='badge badge-pill badge-secondary' data-toggle='tooltip' data-placement='top' title='Akun belum melanjutkan tahap pendaftaran, hubungi pemilik akun !'><i class='fa fa-exclamation fa-w-20'></i></div>";
+                elseif ($santri['is_terdaftar'] == 1) :
+                    $aktif = "<div class='badge badge-pill badge-success' data-toggle='tooltip' data-placement='top' title='Akun sudah siap di masukkan ke kelas'><i class='fa fa-check fa-w-20'></i></div>";
+                endif;
             endif;
             $tbody[] = $aksi;
             $tbody[] = $aktif;
@@ -107,17 +101,70 @@ class Operator extends CI_Controller
 
     public function add()
     {
-        // didapat dari ajax yang dimana data{nama:nama,alamat:alamat}
-        $nama = $this->input->post('nama');
-        $alamat = $this->input->post('alamat');
+        $admin = [
+            'email' => $this->Global_model->getAdminEmailAcc()
+        ];
+        $user['user'] = $this->Operator_model->getDataOperator('login');
+        $jenisdaftar = $this->input->post('jenisdaftar');
+        $asalsekolah = htmlspecialchars($this->input->post('asalsekolah'));
+        $nisn = htmlspecialchars($this->input->post('nisn'));
+        $nama = ucwords(strtolower(((htmlspecialchars($this->input->post('nama'))))));
+        $tmplahir = htmlspecialchars($this->input->post('tmplahir'));
+        $tgllahir = $this->input->post('tgllahir');
+        $jeniskelamin = $this->input->post('jeniskelamin');
+        $agama = htmlspecialchars($this->input->post('agama'));
+        $desa = htmlspecialchars($this->input->post('desa'));
+        $kec = htmlspecialchars($this->input->post('kec'));
+        $kab = htmlspecialchars($this->input->post('kab'));
+        $nohp = htmlspecialchars($this->input->post('nohp'));
+        $email = htmlspecialchars($this->input->post('email'));
+        $id_sekolah = $user['user']['id_lembaga'];
 
         $tambahsantri = array(
-            'data1' => $nama,
-            'data2' => $alamat
+            'jenisdaftar' => $jenisdaftar,
+            'asalsekolah' => $asalsekolah,
+            'nisn' => $nisn,
+            'nama' => $nama,
+            'tmplahir' => $tmplahir,
+            'tgllahir' => $tgllahir,
+            'jeniskelamin' => $jeniskelamin,
+            'agama' => $agama,
+            'desa' => $desa,
+            'kec' => $kec,
+            'kab' => $kab,
+            'nohp' => $nohp,
+            'email' => $email,
+            'id_sekolah' => $id_sekolah,
+            'admin_email' => $admin['email']['username'],
+            'admin_password' => $admin['email']['password']
         );
 
-        $data = $this->Santri_model->tambahDataSantri($tambahsantri);
+        $validasiemail = $this->Santri_model->getDataSantri('email', $email);
 
+        if ($validasiemail) {
+            echo json_encode('email!!!');
+        } else {
+            $data = $this->Santri_model->tambahDataSantri($tambahsantri);
+            echo json_encode($data);
+        }
+    }
+
+    public function actv()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $iduser = $this->input->post('iduser');
+
+        $data = $this->Santri_model->aktivasiAkun($iduser);
         echo json_encode($data);
+    }
+
+    public function del()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $iduser = $this->input->post('iduser');
+        $idsantri = $this->input->post('idsantri');
+
+        $hapusdata = $this->Santri_model->hapusDataSantri($iduser, $idsantri);
+        echo json_encode($hapusdata);
     }
 }

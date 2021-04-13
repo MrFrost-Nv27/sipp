@@ -60,7 +60,7 @@
                             <th>Nama Lengkap</th>
                             <th>Tanggal Daftar</th>
                             <th>Aksi</th>
-                            <th>Aktif</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody align="center">

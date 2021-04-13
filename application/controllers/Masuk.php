@@ -141,7 +141,9 @@ class Masuk extends CI_Controller
 					'email' => $email,
 					'id_sekolah' => $id_sekolah,
 					'admin_email' => $admin['email']['username'],
-					'admin_password' => $admin['email']['password']
+					'admin_password' => $admin['email']['password'],
+					'admin_smtp' => $admin['email']['smtp'],
+					'admin_port' => $admin['email']['port']
 				);
 
 				$this->Daftar_model->santriDaftar($tambahsantri);

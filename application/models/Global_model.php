@@ -118,9 +118,13 @@ class Global_model extends CI_Model
     {
         $username = $this->db->get_where('myconfig', ['ckey' => 'admin-email address'])->row_array();
         $password = $this->db->get_where('myconfig', ['ckey' => 'admin-email password'])->row_array();
+        $smtp = $this->db->get_where('myconfig', ['ckey' => 'admin-smtp host'])->row_array();
+        $port = $this->db->get_where('myconfig', ['ckey' => 'admin-smtp port'])->row_array();
         $data = [
             "username" => $username['cvalue'],
-            "password" => $password['cvalue']
+            "password" => $password['cvalue'],
+            "smtp" => $smtp['cvalue'],
+            "port" => $port['cvalue']
         ];
         return $data;
     }

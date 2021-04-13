@@ -136,7 +136,9 @@ class Operator extends CI_Controller
             'email' => $email,
             'id_sekolah' => $id_sekolah,
             'admin_email' => $admin['email']['username'],
-            'admin_password' => $admin['email']['password']
+            'admin_password' => $admin['email']['password'],
+            'admin_smtp' => $admin['email']['smtp'],
+            'admin_port' => $admin['email']['port']
         );
 
         $validasiemail = $this->Santri_model->getDataSantri('email', $email);

@@ -168,8 +168,8 @@ class Daftar_model extends CI_Model
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = "ssl";
-            $mail->Host = "smtp.googlemail.com";
-            $mail->Port = 465;
+            $mail->Host = $data['admin_smtp'];
+            $mail->Port = $data['admin_port'];
             $mail->Username = $data['admin_akun'];
             $mail->Password = $data['admin_password'];
         }

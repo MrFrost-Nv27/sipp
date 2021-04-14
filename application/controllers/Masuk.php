@@ -8,6 +8,7 @@ class Masuk extends CI_Controller
 		parent::__construct();
 		$this->load->model('Sekolah_model');
 		$this->load->model('Daftar_model');
+		cek_mt();
 	}
 
 	public function index()

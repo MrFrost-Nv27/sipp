@@ -8,6 +8,7 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->model('Menu_model');
         $this->load->model('Operator_model');
+        cek_mt();
         is_logged_in();
     }
 

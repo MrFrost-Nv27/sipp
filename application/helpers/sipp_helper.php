@@ -8,6 +8,18 @@ function is_logged_in()
     }
 }
 
+function cek_mt()
+{
+    $ci = get_instance();
+    $status = $ci->db->get_where('myconfig', [
+        'ckey' => 'maintenance',
+        'cvalue' => 1
+    ]);
+    if ($status->num_rows() > 0) {
+        redirect('maintenance');
+    }
+}
+
 function cekAksesCtl()
 {
     $ci = get_instance();

@@ -9,6 +9,7 @@ class Super extends CI_Controller
         $this->load->model('Menu_model');
         $this->load->model('Admin_model');
         $this->load->model('Sekolah_model');
+        cek_mt();
         is_logged_in();
         cekAksesCtl();
     }

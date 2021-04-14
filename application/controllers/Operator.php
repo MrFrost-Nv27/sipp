@@ -9,6 +9,7 @@ class Operator extends CI_Controller
         $this->load->model('Sekolah_model');
         $this->load->model('Menu_model');
         $this->load->model('Operator_model');
+        cek_mt();
         is_logged_in();
         cekAksesCtl();
     }

@@ -23,4 +23,9 @@ class Welcome extends CI_Controller
 	{
 		redirect('masuk');
 	}
+
+	public function maintenance()
+	{
+		$this->load->view('templates/maintenance');
+	}
 }

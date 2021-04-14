@@ -7,6 +7,7 @@ class About extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Menu_model');
+        cek_mt();
         is_logged_in();
     }
 

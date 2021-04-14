@@ -8,12 +8,12 @@ class Masuk extends CI_Controller
 		parent::__construct();
 		$this->load->model('Sekolah_model');
 		$this->load->model('Daftar_model');
-		cek_mt();
 	}
 
 	public function index()
 	{
 		// Check Login
+		cek_mt();
 		$this->Global_model->login_cek();
 
 		if ($this->form_validation->run() == false) {
@@ -30,6 +30,7 @@ class Masuk extends CI_Controller
 
 	private function _login()
 	{
+		cek_mt();
 		$userid = $this->input->post('idpengguna');
 		$username = $this->input->post('idpengguna');
 		$password = $this->input->post('pass');
@@ -91,6 +92,7 @@ class Masuk extends CI_Controller
 
 	public function daftar()
 	{
+		cek_mt();
 		// Check Login
 		$this->Global_model->login_cek();
 		$data['key'] = $this->Global_model->getCaptchaToken();
@@ -159,6 +161,7 @@ class Masuk extends CI_Controller
 
 	public function lupapw()
 	{
+		cek_mt();
 		// Check Login
 		$this->Global_model->login_cek();
 
@@ -185,6 +188,7 @@ class Masuk extends CI_Controller
 
 	public function verify()
 	{
+		cek_mt();
 		$email = $this->input->get('email');
 		$token = $this->input->get('token');
 

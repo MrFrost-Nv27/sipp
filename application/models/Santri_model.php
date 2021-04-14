@@ -190,6 +190,8 @@ class Santri_model extends CI_Model
             'password' => $password,
             'email' => $data['email'],
             'admin_akun' => $data['admin_email'],
+            'admin_smtp' => $data['admin_smtp'],
+            'admin_port' => $data['admin_port'],
             'admin_password' => $data['admin_password']
         ];
         $this->_sendEmail($kirim);

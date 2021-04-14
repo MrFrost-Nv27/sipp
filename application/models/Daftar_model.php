@@ -151,6 +151,8 @@ class Daftar_model extends CI_Model
             'email' => $data['email'],
             'admin_akun' => $data['admin_email'],
             'admin_password' => $data['admin_password'],
+            'admin_smtp' => $data['admin_smtp'],
+            'admin_port' => $data['admin_port'],
             'token' => $user_token['token'],
             'kode' => $user_token['kode']
         ];

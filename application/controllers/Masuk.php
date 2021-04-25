@@ -334,6 +334,7 @@ class Masuk extends CI_Controller
 	public function actvcode()
 	{
 		$user = $this->db->get_where('user', ['id' => $this->session->userdata('sipp_userid')])->row_array();
+
 		$token = $this->input->post('kode');
 		$user_token = $this->db->get_where('user_token', ['email' => $user['email']])->row_array();
 

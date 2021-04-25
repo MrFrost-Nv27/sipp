@@ -184,12 +184,12 @@ $(document).ready(function () {
 			}, // ambil datanya dari form yang ada di variabel
 			dataType: "JSON",
 			error: function (data) {
-				console.log("gagal mengirim data");
+				console.log(data.responseText);
 			},
-			success: function (data) {
-				$("input[name=csrf_sipp_token]").val(data.csrf);
-				console.log(data);
-				if (data.status == "sejen!!!") {
+			success: function (res) {
+				$("input[name=csrf_sipp_token]").val(res.csrf);
+				console.log(res);
+				if (res.status == "sejen!!!") {
 					swal.fire({
 						icon: "error",
 						title: "Aktivasi",

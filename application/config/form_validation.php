@@ -1,25 +1,6 @@
 <?php
 
 $config = [
-    'masuk/index' => [
-        [
-            'field' => 'idpengguna',
-            'label' => 'ID Pengguna',
-            'rules' => 'trim|required',
-            'errors' => [
-                'required' => 'Tidak Boleh Kosong !'
-            ]
-        ],
-        [
-            'field' => 'pass',
-            'label' => 'Password',
-            'rules' => 'trim|required',
-            'errors' => [
-                'required' => 'Tidak Boleh Kosong !'
-            ]
-        ]
-    ],
-
     'masuk/daftar' => [
         [
             'field' => 'jenisdaftar',

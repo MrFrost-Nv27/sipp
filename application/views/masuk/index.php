@@ -1,13 +1,15 @@
+<span class="login100-form-title p-b-30">
+    <?= $judul; ?>
+</span>
 <?php
 
 echo $this->session->flashdata('message');
 $formopen = [
     'class' => 'login100-form validate-form',
-    'id' => 'myform',
-    'name' => 'masuk'
+    'id' => 'gologin',
+    'name' => 'gologin'
 ];
-echo form_open(base_url('masuk'), $formopen); ?>
-
+echo form_open('#', $formopen); ?>
 <div class="wrap-input100 validate-input m-b-23" data-validate="ID Pengguna Tidak boleh kosong">
     <span class="label-input100">ID Pengguna</span>
     <?php
@@ -19,7 +21,7 @@ echo form_open(base_url('masuk'), $formopen); ?>
         'type' => 'text',
         'placeholder' => 'Masukkan ID Pengguna',
         'autocomplete' => 'name',
-        'value' => set_value('idpengguna')
+        'required' => true
     ];
     echo form_input($masuk_username); ?>
     <span class="focus-input100" data-symbol="person_outline"></span>
@@ -27,14 +29,22 @@ echo form_open(base_url('masuk'), $formopen); ?>
 
 <div class="wrap-input100 validate-input" data-validate="Password tidak boleh kosong">
     <span class="label-input100">Kata Sandi</span>
-    <?= form_error('pass', '<small class="badge badge-pill badge-danger">', '</small>'); ?>
-    <input class="input100" type="password" name="pass" placeholder="Masukkan Kata Sandi"
-        autocomplete="current-password">
+    <?= form_error('pass', '<small class="badge badge-pill badge-danger">', '</small>');
+    $masuk_password = [
+        'class' => 'input100',
+        'id' => 'idpass',
+        'name' => 'idpass',
+        'type' => 'password',
+        'placeholder' => 'Masukkan Kata Sandi',
+        'autocomplete' => 'current-password',
+        'required' => true
+    ];
+    echo form_input($masuk_password); ?>
     <span class="focus-input100" data-symbol="lock_open"></span>
 </div>
 
 <div class="text-right p-t-8 p-b-20">
-    <a href="<?= base_url(); ?>masuk/lupapw">
+    <a href="<?= base_url(); ?>forget">
         Lupa Kata Sandi ?
     </a>
 </div>
@@ -53,7 +63,7 @@ echo form_open(base_url('masuk'), $formopen); ?>
         Atau mendaftar sebagai siswa / santri baru
     </span>
 
-    <a href="<?= base_url(); ?>masuk/daftar" class="txt2">
+    <a href="#" id="tombolsignup" class="txt2">
         <strong>Daftar</strong>
     </a>
 </div>

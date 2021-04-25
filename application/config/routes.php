@@ -50,6 +50,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'masuk';
+$route['signup'] = 'masuk/daftar';
+$route['forget'] = 'masuk/lupapw';
+$route['logout'] = 'masuk/logout';
 $route['maintenance'] = 'welcome/maintenance';
 $route['404_override'] = 'MyError';
 $route['translate_uri_dashes'] = FALSE;

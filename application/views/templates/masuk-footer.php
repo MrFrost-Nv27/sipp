@@ -1,3 +1,4 @@
+</div>
 <div class="text-center">
     <p><small>SIPP v<?= $keterangan[0]; ?> &copy;<?= $keterangan[1]; ?> <?= $keterangan[2]; ?> (<a
                 href="https://MrFrost-Nv27.github.io/sipp">Official Page</a>)</small></p>
@@ -34,6 +35,7 @@ var Tawk_API = Tawk_API || {},
 <script src="<?= base_url('assets/'); ?>vendor/daterangepicker/moment.min.js"></script>
 <script src="<?= base_url('assets/'); ?>vendor/daterangepicker/daterangepicker.js"></script>
 <script src="<?= base_url('assets/'); ?>vendor/countdowntime/countdowntime.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/'); ?>vendor/sweetalert2/sweetalert2.all.min.js"></script>
 <!--  -->
 
 <!-- Custom JS -->
@@ -43,7 +45,6 @@ var Tawk_API = Tawk_API || {},
 <!-- Googole reCaptcha v2 -->
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <!--  -->
-
 </body>
 
 </html>

@@ -1,4 +1,7 @@
 <?= $this->session->flashdata('message'); ?>
+<span class="login100-form-title p-b-30">
+    <?= $judul; ?>
+</span>
 <form class="login100-form validate-form" action="" method="POST">
     <div class="wrap-input100 validate-input m-b-23" data-validate="Email Tidak boleh kosong">
         <span class="label-input100"></span>
@@ -17,7 +20,7 @@
     </div>
 
     <div class="flex-col-c p-t-20 p-b-17">
-        <a href="<?= base_url(); ?>masuk" class="txt2 p-b-10">
+        <a href="<?= base_url(); ?>" class="txt2 p-b-10">
             <strong>Kembali</strong>
         </a>
         <span class="txt1 p-b-10">

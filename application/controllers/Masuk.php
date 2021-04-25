@@ -16,33 +16,44 @@ class Masuk extends CI_Controller
 		cek_mt();
 		$this->Global_model->login_cek();
 
-		if ($this->form_validation->run() == false) {
-			$data['judul'] = 'Masuk';
-			$data['keterangan'] = $this->Global_model->getKeteranganApp();
-			$this->load->view('templates/masuk-header', $data);
-			$this->load->view('masuk/index');
-			$this->load->view('templates/masuk-footer', $data);
-		} else {
-			// Validasinya sukses
-			$this->_login();
-		}
+		$data['judul'] = 'Masuk';
+		$data['keterangan'] = $this->Global_model->getKeteranganApp();
+		$this->load->view('templates/masuk-header', $data);
+		$this->load->view('masuk/index');
+		$this->load->view('templates/masuk-footer', $data);
+		$this->load->view('script/masuk');
 	}
 
-	private function _login()
+	public function daftar()
 	{
+		// Check Login
 		cek_mt();
-		$userid = $this->input->post('idpengguna');
-		$username = $this->input->post('idpengguna');
-		$password = $this->input->post('pass');
+		$this->Global_model->login_cek();
 
-		$user = $this->db->get_where('user', ['userid' => $userid])->row_array();
+		$data['judul'] = 'Daftar';
+		$data['keterangan'] = $this->Global_model->getKeteranganApp();
+		$data['jk'] = $this->Global_model->getListJenisKelamin();
+		$this->load->view('templates/masuk-header', $data);
+		$this->load->view('masuk/daftar');
+		$this->load->view('templates/masuk-footer', $data);
+		$this->load->view('script/masuk');
+	}
 
-		// Jika usernya ada
-		if ($user) {
-			// Jika usernya aktif
-			if ($user['is_active'] == 1) {
+	public function logindong()
+	{
+		if ($this->input->post('username')) {
+			$data = [
+				'userid' => $this->input->post('username'),
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password')
+			];
+
+			$user = $this->db->get_where('user', ['userid' => $data['userid']])->row_array();
+
+			// Jika usernya ada
+			if ($user) {
 				// Cek Password
-				if (password_verify($password, $user['password'])) {
+				if (password_verify($data['password'], $user['password'])) {
 					// if ($password == $user['password']) {
 					$data = [
 						'sipp_userid' => $user['id'],
@@ -50,22 +61,25 @@ class Masuk extends CI_Controller
 						'sipp_role_id' => $user['role_id']
 					];
 					$this->session->set_userdata($data);
-					redirect('login_gate');
+					// redirect('login_gate');
+					$res = [
+						'status' => 'logindone',
+						'csrf' => $this->security->get_csrf_hash()
+					];
+					echo json_encode($res);
 				} else {
-					$this->Global_model->gagalNotify('Password yang kamu masukkan salah !');
-					redirect('masuk');
+					// $this->Global_model->gagalNotify('Password yang kamu masukkan salah !');
+					$res = [
+						'status' => 'password!!!',
+						'csrf' => $this->security->get_csrf_hash()
+					];
+					echo json_encode($res);
 				}
 			} else {
-				$this->Global_model->gagalNotify('ID Penggunamu belum diaktivasi !');
-				redirect('masuk');
-			}
-		} else {
-			$user = $this->db->get_where('user', ['username' => $username])->row_array();
-			if ($user) {
-				// Jika usernya aktif
-				if ($user['is_active'] == 1) {
+				$user = $this->db->get_where('user', ['username' => $data['username']])->row_array();
+				if ($user) {
 					// Cek Password
-					if (password_verify($password, $user['password'])) {
+					if (password_verify($data['password'], $user['password'])) {
 						// if ($password == $user['password']) {
 						$data = [
 							'sipp_userid' => $user['id'],
@@ -73,89 +87,154 @@ class Masuk extends CI_Controller
 							'sipp_role_id' => $user['role_id']
 						];
 						$this->session->set_userdata($data);
-						$this->Global_model->login_gate();
+						// $this->Global_model->login_gate();
+						$res = [
+							'status' => 'logindone',
+							'csrf' => $this->security->get_csrf_hash()
+						];
+						echo json_encode($res);
 					} else {
-						$this->Global_model->gagalNotify('Password yang kamu masukkan salah !');
-						redirect('masuk');
+						// $this->Global_model->gagalNotify('Password yang kamu masukkan salah !');
+						$res = [
+							'status' => 'password!!!',
+							'csrf' => $this->security->get_csrf_hash()
+						];
+						echo json_encode($res);
 					}
 				} else {
-					$this->Global_model->gagalNotify('ID Penggunamu belum diaktivasi !');
-					redirect('masuk');
+					// Tidak ada user yang valid
+					// return $this->Global_model->gagalNotify('ID Pengguna tidak ditemukan !');
+					$res = [
+						'status' => 'akun!!!',
+						'csrf' => $this->security->get_csrf_hash()
+					];
+					echo json_encode($res);
 				}
-			} else {
-				// Tidak ada user yang valid
-				$this->Global_model->gagalNotify('ID Pengguna tidak ditemukan !');
-				redirect('masuk');
 			}
+		} else {
+			echo 'Hayo mau ngapain :v';
 		}
 	}
 
-	public function daftar()
+	public function daftardong()
 	{
-		cek_mt();
-		// Check Login
-		$this->Global_model->login_cek();
-		$data['key'] = $this->Global_model->getCaptchaToken();
-		if ($this->form_validation->run() == false) {
-			$data['jk'] = $this->Global_model->getListJenisKelamin();
-			$data['agama'] = $this->Global_model->getListAgama();
-			$data['jenisDaftar'] = $this->Sekolah_model->getListjenisDaftar();
-			$data['daftarSekolah'] = $this->Sekolah_model->getListSekolah();
-			$data['judul'] = 'Daftar';
-			$data['keterangan'] = $this->Global_model->getKeteranganApp();
-			$this->load->view('templates/masuk-header', $data);
-			$this->load->view('masuk/daftar', $data);
-			$this->load->view('templates/masuk-footer', $data);
-		} else {
-
-			$status = $this->Daftar_model->captchaVerify($data['key']);
-			if ($status['success']) {
-				$admin = [
-					'email' => $this->Global_model->getAdminEmailAcc()
-				];
-				$jenisdaftar = $this->input->post('jenisdaftar');
-				$id_sekolah = htmlspecialchars($this->input->post('daftarsekolah', true));
-				$asalsekolah = htmlspecialchars($this->input->post('asalsekolah', true));
-				$nisn = htmlspecialchars($this->input->post('nisn'));
-				$nama = ucwords(strtolower(((htmlspecialchars($this->input->post('nama', true))))));
-				$tmplahir = htmlspecialchars($this->input->post('tempatlahir', true));
-				$tgllahir = $this->input->post('tgllahir', true);
-				$jeniskelamin = $this->input->post('jeniskelamin', true);
-				$agama = htmlspecialchars($this->input->post('agama', true));
-				$desa = htmlspecialchars($this->input->post('desa', true));
-				$kec = htmlspecialchars($this->input->post('kecamatan', true));
-				$kab = htmlspecialchars($this->input->post('kabupaten', true));
-				$nohp = htmlspecialchars($this->input->post('nohp', true));
-				$email = htmlspecialchars($this->input->post('email', true));
-
-				$tambahsantri = array(
-					'jenisdaftar' => $jenisdaftar,
-					'asalsekolah' => $asalsekolah,
-					'nisn' => $nisn,
-					'nama' => $nama,
-					'tmplahir' => $tmplahir,
-					'tgllahir' => $tgllahir,
-					'jeniskelamin' => $jeniskelamin,
-					'agama' => $agama,
-					'desa' => $desa,
-					'kec' => $kec,
-					'kab' => $kab,
-					'nohp' => $nohp,
-					'email' => $email,
-					'id_sekolah' => $id_sekolah,
-					'admin_email' => $admin['email']['username'],
-					'admin_password' => $admin['email']['password'],
-					'admin_smtp' => $admin['email']['smtp'],
-					'admin_port' => $admin['email']['port']
-				);
-
-				$this->Daftar_model->santriDaftar($tambahsantri);
-				$this->Global_model->berhasilNotify('Selamat ! anda berhasil mendaftar. kami telah mengirimi pesan yang berisi tautan ke email anda untuk aktivasi akun. silahkan aktivasi terlebih dahulu agar bisa masuk dan melanjutkan ke tahap berikutnya.');
-				redirect('masuk');
+		if ($this->input->post('nama')) {
+			$useridacak = random_string('numeric', 10);
+			$id = $this->db->get('santri')->num_rows();
+			if ($id == 0) {
+				$id = 1;
 			} else {
-				$this->Global_model->gagalNotify('Anda belum menyelesaikan captcha !');
-				redirect('masuk/daftar');
+				$this->db->select_max('id');
+				$id = $this->db->get('santri')->row_array();
+				$id = $id['id'];
+				$id++;
 			}
+			$idppdb = 'ppdb' . 2021 . $id;
+
+			$nohp = htmlspecialchars($this->input->post('nohp', true));
+			if (substr($nohp, 0, 1) == 0) {
+				$nohp = substr($nohp, 1);
+			}
+			$nohpfixed = 62 . $nohp;
+
+			$password = htmlspecialchars($this->input->post('password', true));
+			$password = password_hash($password, PASSWORD_DEFAULT);
+
+			$datatoken = $this->Global_model->genToken();
+
+			// Data santri
+			$data = [
+				'userid' => $useridacak,
+				'id_santri' => $id,
+				'idppdb' => $idppdb,
+				'nama' => ucwords(strtolower(((htmlspecialchars($this->input->post('nama', true)))))),
+				'password' => $password,
+				'nohp' => $nohpfixed,
+				'email' => htmlspecialchars($this->input->post('email', true)),
+				'jk' => $this->input->post('jk', true),
+				'role_id' => 7,
+				'token' => $datatoken['token'],
+				'kode' => $datatoken['kode'],
+				'date_created' => time()
+			];
+
+			$cekuser = [
+				'nohp' => $this->db->get_where('santri', ['no_hp' => $data['nohp']])->row_array(),
+				'email' => $this->db->get_where('user', ['email' => $data['email']])->row_array()
+			];
+
+			$wa = $this->Global_model->getRapiwhaApikey();
+			$res = [
+				'csrf' => $this->security->get_csrf_hash(),
+				'apikey' => $wa['rapiwha_apikey'],
+				'nohp' => $nohpfixed,
+				'message' => $this->Email_model->daftarWA($data)
+			];
+
+			if ($cekuser['nohp']) {
+				$res['status'] = 'nohp!!!';
+				echo json_encode($res);
+			} else if ($cekuser['email']) {
+				$res['status'] = 'email!!!';
+				echo json_encode($res);
+			} else {
+				// Kirim Email
+				$mailing = [
+					'email_to' => htmlspecialchars($this->input->post('email', true)),
+					'email_subjek' => "Registrasi Santri",
+					'email_body' => $this->Email_model->daftar($data)
+				];
+
+				$this->Global_model->sendEmail($mailing);
+				$tambahuser = [
+					'userid' => $data['userid'],
+					'username' => $data['idppdb'],
+					'email' => $data['email'],
+					'password' => $data['password'],
+					'role_id' => $data['role_id'],
+					'date_created' => time()
+				];
+
+				$tambahsantri = [
+					'id' => $data['id_santri'],
+					'nama' => $data['nama'],
+					'jnskelamin' => $data['jk'],
+					'no_hp' => $data['nohp'],
+					'nomor_daftar' => $data['idppdb'],
+					'pasfoto' => "7_" . $data['jk'] . ".png"
+				];
+
+				$tambahsantriakademik = [
+					'id_santri' => $data['id_santri']
+				];
+
+				$tambahtoken = [
+					'email' => $data['email'],
+					'nohp' => $data['nohp'],
+					'token' => $data['token'],
+					'kode' => $data['kode'],
+					'date_created' => time()
+				];
+
+				$tableuser = $this->User_model->tambahDataUser($tambahuser);
+				$this->Santri_model->tambahDataSantri($tambahsantri, $tambahsantriakademik);
+				$this->Global_model->insertToken($tambahtoken);
+
+
+				if ($tableuser == true) {
+					$user = $this->db->get_where('user', ['username' => $data['idppdb']])->row_array();
+					$tambahsession = [
+						'sipp_userid' => $user['id'],
+						'sipp_username' => $data['idppdb'],
+						'sipp_role_id' => $data['role_id']
+					];
+					$this->session->set_userdata($tambahsession);
+				}
+
+				echo json_encode($res);
+			}
+		} else {
+			echo 'Hayo mau ngapain :v Nakal yah';
 		}
 	}
 
@@ -171,6 +250,7 @@ class Masuk extends CI_Controller
 			$this->load->view('templates/masuk-header', $data);
 			$this->load->view('masuk/lupa-pw');
 			$this->load->view('templates/masuk-footer', $data);
+			$this->load->view('script/masuk');
 		} else {
 			$this->Global_model->gagalNotify('Email tidak terdaftar !');
 			redirect('masuk/lupapw');
@@ -224,5 +304,80 @@ class Masuk extends CI_Controller
 			$this->Global_model->gagalNotify('Aktivasi akun gagal ! email tidak terdaftar');
 			redirect('masuk');
 		}
+	}
+
+	public function pageactv()
+	{
+		cek_mt();
+
+		if ($this->session->userdata('sipp_userid')) {
+			$user = $this->db->get_where('user', ['id' => $this->session->userdata('sipp_userid')])->row_array();
+
+			if ($user['is_active'] == 0) {
+				$data = [
+					'judul' => 'Aktivasi Akun',
+					'keterangan' => $this->Global_model->getKeteranganApp(),
+					'user' => $this->User_model->getDataUser('email', $user['email'])
+				];
+				$this->load->view('templates/masuk-header', $data);
+				$this->load->view('masuk/aktivasi');
+				$this->load->view('templates/masuk-footer');
+				$this->load->view('script/masuk');
+			} else {
+				redirect(base_url());
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	public function actvcode()
+	{
+		$user = $this->db->get_where('user', ['id' => $this->session->userdata('sipp_userid')])->row_array();
+		$token = $this->input->post('kode');
+		$user_token = $this->db->get_where('user_token', ['email' => $user['email']])->row_array();
+
+		if ($user_token['kode'] == $token) {
+			$this->User_model->aktivasiAkun($user['id']);
+			$this->db->delete('user_token', ['email' => $user_token['email']]);
+
+			$res = [
+				'csrf' => $this->security->get_csrf_hash(),
+				'status' => 'pada'
+			];
+
+			echo json_encode($res);
+		} else {
+			$res = [
+				'csrf' => $this->security->get_csrf_hash(),
+				'status' => 'sejen!!!'
+			];
+
+			echo json_encode($res);
+		}
+	}
+
+	public function pagesignin()
+	{
+		$data['judul'] = 'Masuk';
+		$this->load->view('masuk/index', $data);
+		$this->load->view('script/masuk');
+	}
+
+	public function pagesignup()
+	{
+		$data['jk'] = $this->Global_model->getListJenisKelamin();
+		$data['judul'] = 'Daftar';
+		$this->load->view('masuk/daftar', $data);
+		$this->load->view('script/masuk');
+	}
+
+	public function pageforget()
+	{
+		// id yang telah diparsing pada ajax ajaxcrud.php data{id:id}
+		$id = $this->input->post('id');
+
+		$data['datapermahasiswa'] = $this->datamahasiswa_model->datamahasiswaedit($id);
+		$this->load->view('formeditmhs', $data);
 	}
 }

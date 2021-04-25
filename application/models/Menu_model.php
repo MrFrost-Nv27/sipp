@@ -5,7 +5,7 @@ class Menu_model extends CI_Model
     public function headerQuery()
     {
         $role_id = $this->session->userdata('sipp_role_id');
-        $data['santri'] = $this->Santri_model->getDataSantri('login');
+        $data['santri'] = $this->Santri_model->loginppdb();
 
         $this->db->select('user_menu_heading.id,judul');
         $this->db->from('user_menu_heading');

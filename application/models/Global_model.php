@@ -1,5 +1,11 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require(APPPATH . 'third_party/phpmailer/autoload.php');
+
 class Global_model extends CI_Model
 {
     public function getTahunC()
@@ -74,7 +80,12 @@ class Global_model extends CI_Model
     {
         // Check Login
         if ($this->session->userdata('sipp_userid')) {
-            $this->login_gate();
+            $user = $this->db->get_where('user', ['id' => $this->session->userdata('sipp_userid')])->row_array();
+            if ($user['is_active'] == 0) {
+                redirect('masuk/pageactv');
+            } else {
+                $this->login_gate();
+            }
         }
     }
 
@@ -84,7 +95,7 @@ class Global_model extends CI_Model
         $role_row = $this->db->get_where('user_role', ['id' => $user['role_id']])->row_array();
         if ($user['role_id'] == 7) {
             $santri = $this->Santri_model->getDataSantri('login');
-            if ($santri['is_terdaftar'] == 0) {
+            if ($santri['is_terdaftar'] !== 1) {
                 redirect('santri/ppdb');
             } else {
                 redirect('santri/index');
@@ -129,6 +140,15 @@ class Global_model extends CI_Model
         return $data;
     }
 
+    public function getRapiwhaApikey()
+    {
+        $apikey = $this->db->get_where('myconfig', ['ckey' => 'rapiwha-apikey'])->row_array();
+        $data = [
+            "rapiwha_apikey" => $apikey['cvalue']
+        ];
+        return $data;
+    }
+
     public function getCaptchaToken()
     {
         $local_secret = $this->db->get_where('myconfig', ['ckey' => 'captcha-local secret key'])->row_array();
@@ -142,5 +162,86 @@ class Global_model extends CI_Model
             "sipp_site" => $sipp_site['cvalue']
         ];
         return $data;
+    }
+
+    public function genToken()
+    {
+        $data = [
+            // 'token' => base64_encode(random_bytes(32)),
+            'token' => random_string('alnum', 42),
+            'kode' => random_string('numeric', 6)
+        ];
+        return $data;
+    }
+
+    public function sendEmail($data)
+    {
+
+        $mail = new PHPMailer(true);
+
+        $auth = true;
+
+        $admin =  $this->getAdminEmailAcc();
+
+        if ($auth) {
+            $mail->IsSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = "ssl";
+            $mail->Host = $admin['smtp'];
+            $mail->Port = $admin['port'];
+            $mail->Username = $admin['username'];
+            $mail->Password = $admin['password'];
+        }
+
+        $mail->AddAddress($data['email_to']);
+        $mail->SetFrom($admin['username'], "Al Hikmah 1 Customer Service");
+        $mail->isHTML(true);
+        $mail->Subject = $data['email_subjek'];
+        $mail->Body = $data['email_body'];
+
+        try {
+            $mail->Send();
+            return true;
+        } catch (Exception $e) {
+            echo $mail->ErrorInfo;
+        }
+    }
+
+    public function sendWA($data)
+    {
+        $api =  $this->getRapiwhaApikey();
+        $api_url = "http://panel.rapiwha.com/send_message.php";
+        $api_url .= "?apikey=" . urlencode($api['rapiwha_apikey']);
+        $api_url .= "&number=" . urlencode($data['nohp']);
+        $api_url .= "&text=" . urlencode($data['message']);
+
+        // Send Message
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }
+    }
+
+    public function insertToken($data)
+    {
+        $this->db->insert('user_token', $data);
     }
 }

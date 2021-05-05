@@ -12,6 +12,21 @@ class Sekolah_model extends CI_Model
         return $this->db->get_where('lembaga')->result_array();
     }
 
+    public function getListJurusan()
+    {
+        return $this->db->get_where('lembaga_jurusan')->result_array();
+    }
+
+    public function getJurusanById($id)
+    {
+        return $this->db->get_where('lembaga_jurusan', ['id' => $id])->row_array();
+    }
+
+    public function getListJurusanByLembaga($id)
+    {
+        return $this->db->get_where('lembaga_jurusan', ['id_lembaga' => $id])->result_array();
+    }
+
     public function generateIdSantri()
     {
         $jumlah = $this->db->get('peoples')->num_rows();

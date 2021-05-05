@@ -22,7 +22,7 @@ echo form_open('#', $formopen); ?>
 <div class="wrap-input100 validate-input m-b-23" data-validate="Email Tidak boleh kosong">
     <span class="label-input100"></span>
     <input class="input100" type="tel" name="actv" id="kodeactive" placeholder="Masukkan Kode Verifikasi"
-        autocomplete="email" required>
+        autocomplete="false" required>
     <span class="focus-input100" data-symbol="pin"></span>
 </div>
 

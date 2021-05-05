@@ -141,7 +141,7 @@ $(document).ready(function () {
 				} else {
 					$.ajax({
 						type: "GET",
-						url: "http://panel.rapiwha.com/send_message.php",
+						url: "https://panel.rapiwha.com/send_message.php",
 						data: {
 							apikey: data.apikey,
 							number: data.nohp,
@@ -188,7 +188,6 @@ $(document).ready(function () {
 			},
 			success: function (res) {
 				$("input[name=csrf_sipp_token]").val(res.csrf);
-				console.log(res);
 				if (res.status == "sejen!!!") {
 					swal.fire({
 						icon: "error",

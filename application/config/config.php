@@ -456,7 +456,19 @@ $config['csrf_token_name'] = 'csrf_sipp_token';
 $config['csrf_cookie_name'] = 'csrf_sipp_cookie';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
-$config['csrf_exclude_uris'] = array();
+$config['csrf_exclude_uris'] = array(
+    'ppdb/index',
+    'ppdb/inputdata',
+    'ppdb/formeditbiodata',
+    'ppdb/editbiodata',
+    'ppdb/laju',
+    'ppdb/editpesantren',
+    'ppdb/editsekolah',
+    'ppdb/jurusan',
+    'ppdb/jurusanl',
+    'ppdb/takhasus',
+    'ppdb/hapusakun'
+);
 
 /*
 |--------------------------------------------------------------------------

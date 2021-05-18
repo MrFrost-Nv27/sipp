@@ -467,7 +467,15 @@ $config['csrf_exclude_uris'] = array(
     'ppdb/jurusan',
     'ppdb/jurusanl',
     'ppdb/takhasus',
-    'ppdb/hapusakun'
+    'ppdb/hapusakun',
+    'operator/actv',
+    'operator/confirm',
+    'operator/formkonfir',
+    'operator/del',
+    'pesantren/actv',
+    'pesantren/confirm',
+    'pesantren/del',
+    'pesantren/datasantri'
 );
 
 /*

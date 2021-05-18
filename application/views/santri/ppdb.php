@@ -201,10 +201,13 @@
                             <h4>Komplek <?= $pesantrenku['nama']; ?></h4>
                             <p>Tanggal Daftar : <?= date("d-F-Y", $user['tanggal_daftar_pesantren']); ?><br></p>
                             <?php if ($user['status_pesantren'] == 1) : ?>
+                            <h5>Kamar Zam-zam</h5>
                             <button type="button" class="badge badge-pill badge-success">Selesai</button>
                             <?php elseif ($user['status_pesantren'] == 2) : ?>
                             <button type="button" class="badge badge-pill badge-warning">Proses</button>
                             <?php endif; ?>
+                            <small><br>Contact Person : <?= $pesantrenku['cp_num']; ?>
+                                (<?= $pesantrenku['cp_name']; ?>)</small>
                         </div>
                     </div>
                 </div>
@@ -262,10 +265,13 @@
                             <?php endif; ?>
                             <p>Tanggal Daftar : <?= date("d-F-Y", $user['tanggal_daftar_sekolah']); ?><br></p>
                             <?php if ($user['status_sekolah'] == 1) : ?>
+                            <h5>Kelas X TKR 1</h5>
                             <button type="button" class="badge badge-pill badge-success">Selesai</button>
                             <?php elseif ($user['status_sekolah'] == 2) : ?>
                             <button type="button" class="badge badge-pill badge-warning">Proses</button>
                             <?php endif; ?>
+                            <small><br>Contact Person : <?= $sekolahku['cp_num']; ?>
+                                (<?= $sekolahku['cp_name']; ?>)</small>
                         </div>
                     </div>
                 </div>

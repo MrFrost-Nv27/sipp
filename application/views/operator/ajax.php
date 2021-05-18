@@ -119,204 +119,249 @@
             </div>
         </div>
     </div>
-    <script>
-    $(document).ready(function() {
-        // ini adalah fungsi untuk mengambil data santri dan di include ke dalam datatable
-        var datasantri = $('#datasantri').DataTable({
-            "processing": true,
-            responsive: true,
-            "ajax": "<?= base_url("operator/datasantri") ?>",
-            stateSave: true,
-            "order": []
-        })
+</div>
+<div class="modal fade" id="konfirsantri" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Santri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ml-2 mr-2">
+                <div id="formkonfirsantri">
 
-        // Fungsi untuk Refresh data
-        $('#refreshdata').on('click', function() {
-            datasantri.ajax.reload(null, false)
-        });
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+    // ini adalah fungsi untuk mengambil data santri dan di include ke dalam datatable
+    var datasantri = $('#datasantri').DataTable({
+        "processing": true,
+        responsive: true,
+        "ajax": "<?= base_url("operator/datasantri") ?>",
+        stateSave: true,
+        "order": []
+    })
 
-        // fungsi untuk menambah data  
-        $('#formtambahdatasantri').on('submit', function() {
-            var jenisdaftar = $('#add-jenisdaftar').val();
-            var asalsekolah = $('#add-asalsekolah').val();
-            var nisn = $('#add-nisn').val();
-            var nama = $('#add-nama').val();
-            var tmplahir = $('#add-tmplahir').val();
-            var tgllahir = $('#add-tgllahir').val();
-            var jeniskelamin = $('#add-jeniskelamin').val();
-            var agama = $('#add-agama').val();
-            var desa = $('#add-desa').val();
-            var kec = $('#add-kec').val();
-            var kab = $('#add-kab').val();
-            var nohp = $('#add-nohp').val();
-            var email = $('#add-email').val();
-            $.ajax({
-                type: "post",
-                url: "<?= base_url('operator/add') ?>",
-                beforeSend: function() {
-                    swal.fire({
-                        title: 'Menunggu',
-                        html: 'Memproses data',
-                        didOpen: () => {
-                            swal.showLoading()
-                        }
-                    })
-                },
-                data: {
-                    jenisdaftar: jenisdaftar,
-                    asalsekolah: asalsekolah,
-                    nisn: nisn,
-                    nama: nama,
-                    tmplahir: tmplahir,
-                    tgllahir: tgllahir,
-                    jeniskelamin: jeniskelamin,
-                    agama: agama,
-                    desa: desa,
-                    kec: kec,
-                    kab: kab,
-                    nohp: nohp,
-                    email: email
-                }, // ambil datanya dari form yang ada di variabel
-                dataType: "JSON",
-                error: function(data) {
-                    console.log('gagal mengirim data');
-                },
-                success: function(data) {
-                    // // bersihkan form pada modal
-                    if (data == "email!!!") {
-                        swal.close();
-                        $('#validate-email').removeAttr('hidden');
-                        $('#add-email').val('');
-                    } else {
-                        // console.log(data);
-                        datasantri.ajax.reload(null, false);
-                        $('#validate-email').attr("hidden", true);
-                        swal.fire({
-                            icon: 'success',
-                            title: 'Tambah Santri',
-                            text: 'Anda Berhasil Menambah Mahasiswa'
-                        })
-                        // tutup modal
-                        $('#add-jenisdaftar').val('');
-                        $('#add-asalsekolah').val('');
-                        $('#add-nisn').val('');
-                        $('#add-nama').val('');
-                        $('#add-tmplahir').val('');
-                        $('#add-tgllahir').val('');
-                        $('#add-jeniskelamin').val('');
-                        $('#add-agama').val('');
-                        $('#add-desa').val('');
-                        $('#add-kec').val('');
-                        $('#add-kab').val('');
-                        $('#add-nohp').val('');
-                        $('#add-email').val('');
-                        $('#tambahsantri').toggle('hide');
-                        $('.modal-backdrop').toggle();
+    // Fungsi untuk Refresh data
+    $('#refreshdata').on('click', function() {
+        datasantri.ajax.reload(null, false)
+    });
+
+    // fungsi untuk menambah data  
+    $('#formtambahdatasantri').on('submit', function() {
+        var jenisdaftar = $('#add-jenisdaftar').val();
+        var asalsekolah = $('#add-asalsekolah').val();
+        var nisn = $('#add-nisn').val();
+        var nama = $('#add-nama').val();
+        var tmplahir = $('#add-tmplahir').val();
+        var tgllahir = $('#add-tgllahir').val();
+        var jeniskelamin = $('#add-jeniskelamin').val();
+        var agama = $('#add-agama').val();
+        var desa = $('#add-desa').val();
+        var kec = $('#add-kec').val();
+        var kab = $('#add-kab').val();
+        var nohp = $('#add-nohp').val();
+        var email = $('#add-email').val();
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('operator/add') ?>",
+            beforeSend: function() {
+                swal.fire({
+                    title: 'Menunggu',
+                    html: 'Memproses data',
+                    didOpen: () => {
+                        swal.showLoading()
                     }
-                }
-            })
-            return false;
-        });
-
-        // fungsi untuk Aktivasi Akun Santri
-        // pilih selector dari table id datasantri dengan class .aktivasi-santri
-        $('#datasantri').on('click', '.aktivasi-santri', function() {
-            var idsantri = $(this).data('idsantri');
-            var iduser = $(this).data('iduser');
-            swal.fire({
-                title: 'Aktivasi Akun',
-                text: "Anda ingin mengaktivasi akun ini ? Sebelum mengaktivasi akun, harap konfirmasi terlebih dahulu kepada pendaftar !",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Aktivasi',
-                cancelButtonText: 'Tidak'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: "<?= base_url('operator/actv') ?>",
-                        method: "post",
-                        beforeSend: function() {
-                            swal.fire({
-                                title: 'Menunggu',
-                                html: 'Memproses data',
-                                didOpen: () => {
-                                    swal.showLoading()
-                                }
-                            })
-                        },
-                        data: {
-                            iduser: iduser,
-                            idsantri: idsantri
-                        },
-                        success: function(data) {
-                            swal.fire(
-                                'Aktivasi',
-                                'Akun Berhasil Diaktivasi',
-                                'success'
-                            )
-                            console.log(data);
-                            datasantri.ajax.reload(null, false)
-                        }
+                })
+            },
+            data: {
+                jenisdaftar: jenisdaftar,
+                asalsekolah: asalsekolah,
+                nisn: nisn,
+                nama: nama,
+                tmplahir: tmplahir,
+                tgllahir: tgllahir,
+                jeniskelamin: jeniskelamin,
+                agama: agama,
+                desa: desa,
+                kec: kec,
+                kab: kab,
+                nohp: nohp,
+                email: email
+            }, // ambil datanya dari form yang ada di variabel
+            dataType: "JSON",
+            error: function(data) {
+                console.log('gagal mengirim data');
+            },
+            success: function(data) {
+                // // bersihkan form pada modal
+                if (data == "email!!!") {
+                    swal.close();
+                    $('#validate-email').removeAttr('hidden');
+                    $('#add-email').val('');
+                } else {
+                    // console.log(data);
+                    datasantri.ajax.reload(null, false);
+                    $('#validate-email').attr("hidden", true);
+                    swal.fire({
+                        icon: 'success',
+                        title: 'Tambah Santri',
+                        text: 'Anda Berhasil Menambah Mahasiswa'
                     })
-                } else if (result.dismiss === swal.DismissReason.cancel) {
-                    swal.fire(
-                        'Batal',
-                        'Anda membatalkan aktivasi akun',
-                        'error'
-                    )
+                    // tutup modal
+                    $('#add-jenisdaftar').val('');
+                    $('#add-asalsekolah').val('');
+                    $('#add-nisn').val('');
+                    $('#add-nama').val('');
+                    $('#add-tmplahir').val('');
+                    $('#add-tgllahir').val('');
+                    $('#add-jeniskelamin').val('');
+                    $('#add-agama').val('');
+                    $('#add-desa').val('');
+                    $('#add-kec').val('');
+                    $('#add-kab').val('');
+                    $('#add-nohp').val('');
+                    $('#add-email').val('');
+                    $('#tambahsantri').toggle('hide');
+                    $('.modal-backdrop').toggle();
                 }
-            })
-        });
+            }
+        })
+        return false;
+    });
 
-        // fungsi untuk hapus data
-        //pilih selector dari table id datasantri dengan class .hapus-santri
-        $('#datasantri').on('click', '.hapus-santri', function() {
-            var idsantri = $(this).data('idsantri');
-            var iduser = $(this).data('iduser');
-            swal.fire({
-                title: 'Hapus Akun',
-                text: "Anda ingin menghapus akun ini ? Harap tinjau kembali sebelum menghapus akun",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Hapus',
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                cancelButtonText: 'Tidak'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: "<?= base_url('operator/del') ?>",
-                        method: "post",
-                        beforeSend: function() {
-                            swal.fire({
-                                title: 'Menunggu',
-                                html: 'Memproses data',
-                                didOpen: () => {
-                                    swal.showLoading()
-                                }
-                            })
-                        },
-                        data: {
-                            iduser: iduser,
-                            idsantri: idsantri
-                        },
-                        success: function(data) {
-                            swal.fire(
-                                'Hapus',
-                                'Berhasil Terhapus',
-                                'success'
-                            )
-                            datasantri.ajax.reload(null, false)
-                        }
-                    })
-                } else if (result.dismiss === swal.DismissReason.cancel) {
-                    swal.fire(
-                        'Batal',
-                        'Anda membatalkan penghapusan',
-                        'error'
-                    )
-                }
-            })
+    // fungsi untuk Aktivasi Akun Santri
+    // pilih selector dari table id datasantri dengan class .aktivasi-santri
+    $('#datasantri').on('click', '.aktivasi-santri', function() {
+        var idsantri = $(this).data('idsantri');
+        var iduser = $(this).data('iduser');
+        swal.fire({
+            title: 'Aktivasi Akun',
+            text: "Anda ingin mengaktivasi akun ini ? Sebelum mengaktivasi akun, harap konfirmasi terlebih dahulu kepada pendaftar !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Aktivasi',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "<?= base_url('operator/actv') ?>",
+                    method: "post",
+                    beforeSend: function() {
+                        swal.fire({
+                            title: 'Menunggu',
+                            html: 'Memproses data',
+                            didOpen: () => {
+                                swal.showLoading()
+                            }
+                        })
+                    },
+                    data: {
+                        iduser: iduser,
+                        idsantri: idsantri
+                    },
+                    success: function(data) {
+                        swal.fire(
+                            'Aktivasi',
+                            'Akun Berhasil Diaktivasi',
+                            'success'
+                        )
+                        console.log(data);
+                        datasantri.ajax.reload(null, false)
+                    }
+                })
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+                swal.fire(
+                    'Batal',
+                    'Anda membatalkan aktivasi akun',
+                    'error'
+                )
+            }
+        })
+    });
+
+    // Konfirmasi Santri
+    $('#datasantri').on('click', '.konfirmasi-santri', function() {
+        var idsantri = $(this).data('idsantri');
+        var idlembaga = $(this).data('idlembaga');
+        $.ajax({
+            type: "post",
+            url: "<?= base_url('operator/formkonfir') ?>",
+            beforeSend: function() {
+                swal.fire({
+                    title: 'Menunggu',
+                    html: 'Memproses data',
+                    didOpen: () => {
+                        swal.showLoading()
+                    }
+                })
+            },
+            data: {
+                idsantri: idsantri,
+                idlembaga: idlembaga
+            },
+            success: function(data) {
+                swal.close();
+                $('#formkonfirsantri').html(data);
+            }
         });
     });
-    </script>
+    // fungsi untuk hapus data
+    //pilih selector dari table id datasantri dengan class .hapus-santri
+    $('#datasantri').on('click', '.hapus-santri', function() {
+        var idsantri = $(this).data('idsantri');
+        var iduser = $(this).data('iduser');
+        swal.fire({
+            title: 'Hapus Akun',
+            text: "Anda ingin menghapus akun ini ? Harap tinjau kembali sebelum menghapus akun",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "<?= base_url('operator/del') ?>",
+                    method: "post",
+                    beforeSend: function() {
+                        swal.fire({
+                            title: 'Menunggu',
+                            html: 'Memproses data',
+                            didOpen: () => {
+                                swal.showLoading()
+                            }
+                        })
+                    },
+                    data: {
+                        iduser: iduser,
+                        idsantri: idsantri
+                    },
+                    success: function(data) {
+                        swal.fire(
+                            'Hapus',
+                            'Berhasil Terhapus',
+                            'success'
+                        )
+                        datasantri.ajax.reload(null, false)
+                    }
+                })
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+                swal.fire(
+                    'Batal',
+                    'Anda membatalkan penghapusan',
+                    'error'
+                )
+            }
+        })
+    });
+});
+</script>

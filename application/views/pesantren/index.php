@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-card mb-3 card">
-            <div class="card-header"><?= $user['nama_lembaga']; ?>
+            <div class="card-header"><?= $user['nama_pesantren']; ?>
                 <div class="btn-actions-pane-right">
                     <div role="group" class="btn-group-sm btn-group">
                         <button class="mb-2 mr-2 btn btn-success" id="refreshdata"><span
@@ -30,8 +30,8 @@
                             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a href="<?= base_url('operator/index/export/pdf');
-                                                    ?>" class="nav-link">
+                                        <a href="#" class="nav-link" id="export-pdf"
+                                            data-idpesantren="<?= $user['id_lembaga'] ?>">
                                             <span class="btn-icon-wrapper pr-2 opacity-7">
                                                 <i class="fa fa-file-pdf fa-w-20"></i>
                                             </span>
@@ -39,7 +39,8 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="<?= base_url('operator/index/export/xlsx'); ?>" class="nav-link">
+                                        <a href="#" class="nav-link" id="export-xlsx"
+                                            data-idpesantren="<?= $user['id_lembaga'] ?>">
                                             <span class="btn-icon-wrapper pr-2 opacity-7">
                                                 <i class="fa fa-file-excel fa-w-20"></i>
                                             </span>
@@ -71,4 +72,3 @@
     </div>
 </div>
 <!-- End of content -->
-<?php var_dump($user); ?>

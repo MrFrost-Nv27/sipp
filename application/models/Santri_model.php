@@ -99,9 +99,17 @@ class Santri_model extends CI_Model
             // $Config = [$idlembaga];
             $this->db->where('santri_sekolah.id_sekolah =', $config);
             return $this->db->get()->result_array();
+        } elseif ($type == 'setpesantren') {
+            // $Config = [$idlembaga];
+            $this->db->where('santri_pesantren.id_pesantren =', $config);
+            return $this->db->get()->result_array();
         } elseif ($type == 'jumlahlembaga') {
             // $Config = [$idlembaga];
             $this->db->where('santri_sekolah.id_sekolah =', $config);
+            return $this->db->get()->num_rows();
+        } elseif ($type == 'jumlahpesantren') {
+            // $Config = [$idlembaga];
+            $this->db->where('santri_pesantren.id_pesantren =', $config);
             return $this->db->get()->num_rows();
         } elseif ($type == 'jumlahtotal') {
             return $this->db->get()->num_rows();

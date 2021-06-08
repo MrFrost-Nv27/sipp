@@ -84,4 +84,20 @@ class Super extends CI_Controller
             $this->load->view('templates/dash-footer', $data);
         }
     }
+
+    public function testing()
+    {
+        $data['user'] = $this->Admin_model->getDataAdmin('login');
+        $data['image'] = $data['user']['foto'];
+        $data['header'] = $this->Menu_model->headerQuery();
+        $data['page'] = $this->Menu_model->getMenuById(27);
+        $data['keterangan'] = $this->Global_model->getKeteranganApp();
+
+        $this->load->view('templates/dash-header', $data);
+        $this->load->view('templates/dash-topbar');
+        $this->load->view('templates/dash-sidebar');
+        $this->load->view($data['page']['url'], $data);
+        $this->load->view('templates/dash-footer');
+        $this->load->view('script/super-testing');
+    }
 }

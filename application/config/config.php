@@ -475,7 +475,8 @@ $config['csrf_exclude_uris'] = array(
     'pesantren/actv',
     'pesantren/confirm',
     'pesantren/del',
-    'pesantren/datasantri'
+    'pesantren/datasantri',
+    'testing/mailtest'
 );
 
 /*

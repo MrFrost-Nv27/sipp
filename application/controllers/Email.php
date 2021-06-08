@@ -17,9 +17,22 @@ class Email extends CI_Controller
 			'judul' => 'Email Verify',
 			'nama' => 'Nova Adi Saputra',
 			'idppdb' => 'ppdb20211',
-			'kode' => 123456
+			'kode' => 123456,
+			'pass' => 'katasandi123'
 		];
 		$data['html'] = $this->Email_model->daftar($data);
 		$this->load->view('email/index', $data);
+	}
+
+	public function wa()
+	{
+		$data = [
+			'nama' => 'Nova Adi Saputra',
+			'idppdb' => 'ppdb20211',
+			'kode' => 123456,
+			'pass' => 'katasandi123'
+		];
+		$data['html'] = $this->Email_model->daftarWA($data);
+		$this->load->view('email/daftarwa', $data);
 	}
 }

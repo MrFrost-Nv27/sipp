@@ -137,8 +137,8 @@ class Masuk extends CI_Controller
 			}
 			$nohpfixed = 62 . $nohp;
 
-			$password = htmlspecialchars($this->input->post('password', true));
-			$password = password_hash($password, PASSWORD_DEFAULT);
+			$passwordold = htmlspecialchars($this->input->post('password', true));
+			$password = password_hash($passwordold, PASSWORD_DEFAULT);
 
 			$datatoken = $this->Global_model->genToken();
 
@@ -155,7 +155,8 @@ class Masuk extends CI_Controller
 				'role_id' => 7,
 				'token' => $datatoken['token'],
 				'kode' => $datatoken['kode'],
-				'date_created' => time()
+				'date_created' => time(),
+				'pass' => $passwordold
 			];
 
 			$cekuser = [

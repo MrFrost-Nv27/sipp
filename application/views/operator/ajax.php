@@ -16,8 +16,8 @@
                         <span class="label-input100">Jenis Pendaftaran</span>
                         <select class="select-text" name="jenisdaftar" id="add-jenisdaftar" required>
                             <option value="" disabled selected>--- Pilih Jenis Pendaftaran ---</option>
-                            <?php foreach ($jenisDaftar as $jd) : ?>
-                            <option value="<?= $jd['cvalue']; ?>"><?= $jd['cvalue']; ?></option>
+                            <?php foreach ($jenisDaftar as $jd): ?>
+                            <option value="<?=$jd['cvalue']; ?>"><?=$jd['cvalue']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <span class="focus-select" data-symbol="login"></span>
@@ -25,40 +25,40 @@
                     <div class="wrap-input100 validate-input" data-validate="Asal Sekolah Tidak boleh kosong">
                         <span class="label-input100">Asal Sekolah</span>
                         <input class="input100 is-valid" type="text" name="asalsekolah" id="add-asalsekolah"
-                            placeholder="Masukkan Asal Sekolah" value="<?= set_value('asalsekolah'); ?>" required>
+                            placeholder="Masukkan Asal Sekolah" value="<?=set_value('asalsekolah'); ?>" required>
                         <span class="focus-input100" data-symbol="history_edu"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="NISN Tidak boleh kosong">
                         <span class="label-input100">NISN</span>
                         <input class="input100" type="tel" name="nisn" id="add-nisn" placeholder="Masukkan NISN"
-                            value="<?= set_value('nisn'); ?>" required>
+                            value="<?=set_value('nisn'); ?>" required>
                         <span class="focus-input100" data-symbol="format_list_numbered"></span>
                     </div>
                     <legend class="badge badge-pill badge-success mt-2">Data Pribadi</legend>
                     <div class="wrap-input100 validate-input" data-validate="Nama Tidak boleh kosong">
                         <span class="label-input100">Nama Lengkap</span>
                         <input class="input100" type="text" name="nama" id="add-nama"
-                            placeholder="Masukkan Nama Lengkap" value="<?= set_value('nama'); ?>" required>
+                            placeholder="Masukkan Nama Lengkap" value="<?=set_value('nama'); ?>" required>
                         <span class="focus-input100" data-symbol="account_circle"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Tempat Lahir Tidak boleh kosong">
                         <span class="label-input100">Tempat Lahir</span>
                         <input class="input100" type="text" name="tempatlahir" id="add-tmplahir"
-                            placeholder="Masukkan Tempat Lahir" value="<?= set_value('tempatlahir'); ?>" required>
+                            placeholder="Masukkan Tempat Lahir" value="<?=set_value('tempatlahir'); ?>" required>
                         <span class="focus-input100" data-symbol="child_friendly"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Tanggal Lahir Tidak boleh kosong">
                         <span class="label-input100">Tanggal Lahir</span>
                         <input class="input100" type="date" id="add-tgllahir" name="tgllahir"
-                            value="<?= set_value('tgllahir'); ?>" required>
+                            value="<?=set_value('tgllahir'); ?>" required>
                         <span class="focus-input100" data-symbol="event"></span>
                     </div>
                     <div class="wrap-input100 validate-input select" data-validate="Jenis Kelamin Tidak boleh kosong">
                         <span class="label-input100">Jenis Kelamin</span>
                         <select class="select-text" name="jeniskelamin" id="add-jeniskelamin" required>
                             <option value="" disabled selected>--- Pilih Jenis Kelamin ---</option>
-                            <?php foreach ($jk as $kl) : ?>
-                            <option value="<?= $kl['cvalue']; ?>"><?= $kl['cvalue']; ?></option>
+                            <?php foreach ($jk as $kl): ?>
+                            <option value="<?=$kl['cvalue']; ?>"><?=$kl['cvalue']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <span class="focus-select" data-symbol="wc"></span>
@@ -67,8 +67,8 @@
                         <span class="label-input100">Agama</span>
                         <select class="select-text" name="agama" id="add-agama" required>
                             <option value="" disabled selected>--- Pilih Agama ---</option>
-                            <?php foreach ($agama as $agm) : ?>
-                            <option value="<?= $agm['cvalue']; ?>"><?= $agm['cvalue']; ?></option>
+                            <?php foreach ($agama as $agm): ?>
+                            <option value="<?=$agm['cvalue']; ?>"><?=$agm['cvalue']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <span class="focus-select" data-symbol="self_improvement"></span>
@@ -77,26 +77,26 @@
                     <div class="wrap-input100 validate-input" data-validate="Desa Tidak boleh kosong">
                         <span class="label-input100">Desa</span>
                         <input class="input100" type="text" name="desa" id="add-desa" placeholder="Masukkan Desa"
-                            value="<?= set_value('desa'); ?>" required>
+                            value="<?=set_value('desa'); ?>" required>
                         <span class="focus-input100" data-symbol="house"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Kecamatan Tidak boleh kosong">
                         <span class="label-input100">Kecamatan</span>
                         <input class="input100" type="text" name="kecamatan" id="add-kec"
-                            placeholder="Masukkan Kecamatan" value="<?= set_value('kecamatan'); ?>" required>
+                            placeholder="Masukkan Kecamatan" value="<?=set_value('kecamatan'); ?>" required>
                         <span class="focus-input100" data-symbol="apartment"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Kabupaten Tidak boleh kosong">
                         <span class="label-input100">Kabupaten</span>
                         <input class="input100" type="text" name="kabupaten" id="add-kab"
-                            placeholder="Masukkan Kabupaten" value="<?= set_value('kabupaten'); ?>" required>
+                            placeholder="Masukkan Kabupaten" value="<?=set_value('kabupaten'); ?>" required>
                         <span class="focus-input100" data-symbol="golf_course"></span>
                     </div>
                     <legend class="badge badge-pill badge-success mt-2">Kontak Aktif</legend>
                     <div class="wrap-input100 validate-input" data-validate="Nomor Hp Tidak boleh kosong">
                         <span class="label-input100">Nomor Hp</span>
                         <input class="input100" type="tel" name="nohp" id="add-nohp" placeholder="Masukkan Nomor Hp"
-                            value="<?= set_value('nohp'); ?>" required>
+                            value="<?=set_value('nohp'); ?>" required>
                         <span class="focus-input100" data-symbol="contacts"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Alamat Email Tidak boleh kosong">
@@ -104,7 +104,7 @@
                         <small class="badge badge-pill badge-danger" id="validate-email" hidden>Email Sudah Digunakan
                             !</small>
                         <input class="input100" type="email" name="email" id="add-email"
-                            placeholder="Masukkan Alamat Email" value="<?= set_value('email'); ?>" required>
+                            placeholder="Masukkan Alamat Email" value="<?=set_value('email'); ?>" required>
                         <span class="focus-input100" data-symbol="email"></span>
                     </div>
                     <div class="container-login100-form-btn">
@@ -144,7 +144,7 @@ $(document).ready(function() {
     var datasantri = $('#datasantri').DataTable({
         "processing": true,
         responsive: true,
-        "ajax": "<?= base_url("operator/datasantri") ?>",
+        "ajax": "<?=base_url("operator/datasantri") ?>",
         stateSave: true,
         "order": []
     })
@@ -154,7 +154,7 @@ $(document).ready(function() {
         datasantri.ajax.reload(null, false)
     });
 
-    // fungsi untuk menambah data  
+    // fungsi untuk menambah data
     $('#formtambahdatasantri').on('submit', function() {
         var jenisdaftar = $('#add-jenisdaftar').val();
         var asalsekolah = $('#add-asalsekolah').val();
@@ -171,7 +171,7 @@ $(document).ready(function() {
         var email = $('#add-email').val();
         $.ajax({
             type: "post",
-            url: "<?= base_url('operator/add') ?>",
+            url: "<?=base_url('operator/add') ?>",
             beforeSend: function() {
                 swal.fire({
                     title: 'Menunggu',
@@ -252,7 +252,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('operator/actv') ?>",
+                    url: "<?=base_url('operator/actv') ?>",
                     method: "post",
                     beforeSend: function() {
                         swal.fire({
@@ -293,7 +293,7 @@ $(document).ready(function() {
         var idlembaga = $(this).data('idlembaga');
         $.ajax({
             type: "post",
-            url: "<?= base_url('operator/formkonfir') ?>",
+            url: "<?=base_url('operator/formkonfir') ?>",
             beforeSend: function() {
                 swal.fire({
                     title: 'Menunggu',
@@ -330,7 +330,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('operator/del') ?>",
+                    url: "<?=base_url('operator/del') ?>",
                     method: "post",
                     beforeSend: function() {
                         swal.fire({

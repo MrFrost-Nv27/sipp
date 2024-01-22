@@ -10,8 +10,8 @@
                                 class="btn-icon-wrapper opacity-7">
                                 <i class="fa fa-fw" aria-hidden="true" title="Refresh data"></i>
                             </span></button>
-                        <button class="mb-2 mr-2 btn btn-primary" data-toggle="modal" data-target="#tambahsantri"><span
-                                class="btn-icon-wrapper pr-2 opacity-7">
+                        <button class="mb-2 mr-2 btn btn-primary" data-toggle="modal" data-target="#tambahsantri"
+                            disabled><span class="btn-icon-wrapper pr-2 opacity-7">
                                 <i class="fa fa-plus fa-w-20"></i>
                             </span>Tambah</button>
                         <div class="d-inline-block dropdown" id="exportdata">
@@ -71,3 +71,4 @@
     </div>
 </div>
 <!-- End of content -->
+<?php var_dump($user); ?>

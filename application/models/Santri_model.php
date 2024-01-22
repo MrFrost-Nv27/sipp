@@ -16,7 +16,7 @@ class Santri_model extends CI_Model
         user.email,
         user.date_created,
         user.is_active,
-        santri.*,
+        santri.*,santri_sekolah.*,santri_pesantren.*,
         user_role.role";
     }
 
@@ -99,9 +99,17 @@ class Santri_model extends CI_Model
             // $Config = [$idlembaga];
             $this->db->where('santri_sekolah.id_sekolah =', $config);
             return $this->db->get()->result_array();
+        } elseif ($type == 'setpesantren') {
+            // $Config = [$idlembaga];
+            $this->db->where('santri_pesantren.id_pesantren =', $config);
+            return $this->db->get()->result_array();
         } elseif ($type == 'jumlahlembaga') {
             // $Config = [$idlembaga];
             $this->db->where('santri_sekolah.id_sekolah =', $config);
+            return $this->db->get()->num_rows();
+        } elseif ($type == 'jumlahpesantren') {
+            // $Config = [$idlembaga];
+            $this->db->where('santri_pesantren.id_pesantren =', $config);
             return $this->db->get()->num_rows();
         } elseif ($type == 'jumlahtotal') {
             return $this->db->get()->num_rows();
@@ -115,6 +123,24 @@ class Santri_model extends CI_Model
         $this->db->insert('santri_sekolah', $data2);
         $this->db->insert('santri_pesantren', $data2);
         return $this->db->insert('santri', $data);
+    }
+
+    public function ubahdatasantri($data, $id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('santri', $data);
+    }
+
+    public function ubahdatapesantren($data, $id)
+    {
+        $this->db->where('id_santri', $id);
+        return $this->db->update('santri_pesantren', $data);
+    }
+
+    public function ubahdatasekolah($data, $id)
+    {
+        $this->db->where('id_santri', $id);
+        return $this->db->update('santri_sekolah', $data);
     }
 
     public function hapusDataSantri($iduser, $idsantri)

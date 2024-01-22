@@ -63,14 +63,19 @@ class Operator extends CI_Controller
             if ($santri['is_active'] == 0) :
                 $aksi .= "<a class='dropdown-item aktivasi-santri' href='#' id='id' data-toggle='modal' data-idsantri=" . $santri['id_santri'] . " data-iduser=" . $santri['login_id'] . ">Aktivasi Akun</a>";
             endif;
+            if ($santri['status_sekolah'] == 2) :
+                $aksi .= "<a class='dropdown-item konfirmasi-santri' href='#' id='id' data-idsantri=" . $santri['id_santri'] . " data-iduser=" . $santri['login_id'] . " data-idlembaga=" . $user['id_lembaga'] . " data-toggle='modal' data-target='#konfirsantri'>Konfirmasi Akun</a>";
+            endif;
             $aksi .= "<div class='dropdown-divider'></div><a class='dropdown-item hapus-santri' href='#' id='id' data-toggle='modal' data-idsantri=" . $santri['id_santri'] . " data-iduser=" . $santri['login_id'] . ">Hapus</a></div></div>";
             if ($santri['is_active'] == 0) :
                 $aktif = "<div class='badge badge-pill badge-danger' data-toggle='tooltip' data-placement='top' title='Akun belum diaktivasi !'><i class='fa fa-w-20'></i></div>";
             elseif ($santri['is_active'] == 1) :
-                if ($santri['is_terdaftar'] == 0) :
+                if ($santri['status_sekolah'] == 0) :
                     $aktif = "<div class='badge badge-pill badge-secondary' data-toggle='tooltip' data-placement='top' title='Akun belum melanjutkan tahap pendaftaran, hubungi pemilik akun !'><i class='fa fa-exclamation fa-w-20'></i></div>";
-                elseif ($santri['is_terdaftar'] == 1) :
-                    $aktif = "<div class='badge badge-pill badge-success' data-toggle='tooltip' data-placement='top' title='Akun sudah siap di masukkan ke kelas'><i class='fa fa-check fa-w-20'></i></div>";
+                elseif ($santri['status_sekolah'] == 1) :
+                    $aktif = "<div class='badge badge-pill badge-success' data-toggle='tooltip' data-placement='top' title='Akun Siap dimasukkan ke kelas'><i class='fa fa-check fa-w-20'></i></div>";
+                elseif ($santri['status_sekolah'] == 2) :
+                    $aktif = "<div class='badge badge-pill badge-warning' data-toggle='tooltip' data-placement='top' title='Akun menunggu konfirmasi admin !'><i class='fa fa-exclamation fa-w-20'></i></div>";
                 endif;
             endif;
             $tbody[] = $aksi;
@@ -159,6 +164,27 @@ class Operator extends CI_Controller
 
         $data = $this->Santri_model->aktivasiAkun($iduser);
         echo json_encode($data);
+    }
+
+    public function formkonfir()
+    {
+        $data = [
+            'idsantri' => $this->input->post('idsantri'),
+            'idlembaga' => $this->input->post('idlembaga')
+        ];
+        $this->load->view('operator/formkonfir', $data);
+    }
+
+    public function confirm()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $idsantri = $this->input->post('idsantri');
+        $data = [
+            'status_sekolah' => 1
+        ];
+
+        $res = $this->Santri_model->ubahdatasekolah($data, $idsantri);
+        echo json_encode($res);
     }
 
     public function del()

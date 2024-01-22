@@ -104,7 +104,7 @@ class Operator_model extends CI_Model
             ->setCellValue('H1', 'Agama')
             ->setCellValue('I1', 'Hobi')
             ->setCellValue('J1', 'Alamat')
-            ->setCellValue('K1', 'Nomor KIP')
+            ->setCellValue('K1', 'Nomor NIK')
             ->setCellValue('L1', 'Nama Ayah')
             ->setCellValue('M1', 'Nomor Hp Ayah')
             ->setCellValue('N1', 'Pekerjaan Ayah')
@@ -138,7 +138,7 @@ class Operator_model extends CI_Model
                     . $santri['alamat_rt'] . '/' . $santri['alamat_rw'] . ' No. '
                     . $santri['alamat_no'] . ' Dk. ' . $santri['alamat_dk'] . ' Desa ' . $santri['alamat_ds'] . ' Kec. '
                     . $santri['alamat_kec'] . ' Kab. ' . $santri['alamat_kab'])
-                ->setCellValue('K' . $kolom, $santri['no_kip'])
+                ->setCellValue('K' . $kolom, $santri['nik'])
                 ->setCellValue('L' . $kolom, $santri['ayah_nama'])
                 ->setCellValue('M' . $kolom, $santri['ayah_nohp'])
                 ->setCellValue('N' . $kolom, $santri['ayah_kerja'])

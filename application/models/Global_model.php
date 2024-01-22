@@ -49,6 +49,11 @@ class Global_model extends CI_Model
         return $this->db->get_where('myconfig', ['ckey' => 'agama'])->result_array();
     }
 
+    public function getListPenghasilan()
+    {
+        return $this->db->get_where('myconfig', ['ckey' => 'penghasilan'])->result_array();
+    }
+
     public function getRandomPass()
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -94,11 +99,13 @@ class Global_model extends CI_Model
         $user = $this->db->get_where('user', ['id' => $this->session->userdata('sipp_userid')])->row_array();
         $role_row = $this->db->get_where('user_role', ['id' => $user['role_id']])->row_array();
         if ($user['role_id'] == 7) {
-            $santri = $this->Santri_model->getDataSantri('login');
-            if ($santri['is_terdaftar'] !== 1) {
-                redirect('santri/ppdb');
-            } else {
+            $santri = $this->Santri_model->loginppdb();
+            if ($santri['is_terdaftar'] == 1) {
                 redirect('santri/index');
+            } else if ($santri['is_terdaftar'] == 0) {
+                redirect('ppdb/index');
+            } else {
+                redirect('santri/ppdb');
             }
         } else {
             redirect($role_row['controller']);

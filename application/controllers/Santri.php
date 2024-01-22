@@ -35,10 +35,15 @@ class Santri extends CI_Controller
         $data['header'] = $this->Menu_model->headerQuery();
         $data['page'] = $this->Menu_model->getMenuById(15);
         $data['keterangan'] = $this->Global_model->getKeteranganApp();
+        $data['pesantren'] =  $this->Pesantren_model->getListPesantren();
+        $data['jenisDaftar'] = $this->Sekolah_model->getListjenisDaftar();
+        $data['sekolah'] = $this->Sekolah_model->getListSekolah();
+        $data['jurusan'] = $this->Sekolah_model->getListJurusan();
         $this->load->view('templates/dash-header', $data);
         $this->load->view('templates/dash-topbar');
         $this->load->view('templates/dash-sidebar');
         $this->load->view($data['page']['url']);
         $this->load->view('templates/dash-footer');
+        $this->load->view('script/ppdb2');
     }
 }

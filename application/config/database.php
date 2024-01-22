@@ -76,7 +76,7 @@ $query_builder = TRUE;
 // Remote SQL alhikmah1.or.id
 // $db['default'] = array(
 // 	'dsn'	=> '',
-// 	'hostname' => '167.114.167.136',
+// 	'hostname' => 'localhost',
 // 	'username' => 'alhikma3_zen',
 // 	'password' => 'zaenal0905',
 // 	'database' => 'alhikma3_sipp',

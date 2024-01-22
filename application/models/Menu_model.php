@@ -14,7 +14,7 @@ class Menu_model extends CI_Model
         $this->db->where('role_id = ', $role_id);
         $this->db->order_by('user_menu_heading.indeks', 'ASC');
         if ($role_id == 7) {
-            if ($data['santri']['is_terdaftar'] == 0) {
+            if ($data['santri']['is_terdaftar'] !== 1) {
                 $this->db->where('user_menu_heading.id = 4');
                 return $this->db->get()->result_array();
             } else {
